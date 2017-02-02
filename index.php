@@ -103,7 +103,7 @@ if (!is_null($events['events'])) {
 								die("Connection failed: " . $link->connect_error);
 							} 
 												
-							$sql = "UPDATE userregister SET telephone=$text WHERE uid=$userid";
+							$sql = "UPDATE userregister SET telephone='081914xxx' WHERE uid='Ub5f45b12f0f8f8a3a08e5b52ebbcc96b'";
 								
 							if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
