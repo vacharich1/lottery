@@ -86,40 +86,45 @@ if (!is_null($events['events'])) {
 						{
 							$step=$row["step"];
 						}
-						
-					
-					
 					}
 				}
 				if($step=="regis0")
 				{
-					$messages = [
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+							$messages = [
 									'type' => 'text',
 									'text' => "โปรดกรอกรหัสผ่าน"
 								];
-					$telephone="telephone33333";
-					if($telephone=="telephone333")#update telephone number
-						{
-								// Create connection
-								$link = mysqli_connect($host, $username, $password, $db);
-								// Check connection
-								if ($link ->connect_error) {
-									die("Connection failed: " . $link->connect_error);
-								} 
-												
-								$sql = "UPDATE userregister SET telephone=$text WHERE uid=$userid";
 								
-								if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-								} else {
-									echo "Error updating record: " . $link->error;
-								}
+							$link = mysqli_connect($host, $username, $password, $db);
+							// Check connection
+							if ($link ->connect_error) {
+								die("Connection failed: " . $link->connect_error);
+							} 
+												
+							$sql = "UPDATE userregister SET telephone=$text WHERE uid=$userid";
+								
+							if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+							} else {
+								echo "Error updating record: " . $link->error;
+							}
 								
 								#$link->close();
+					}
+					else
+					{
+							$messages = [
+									'type' => 'text',
+									'text' => "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น"
+								];
+					}
+					
+						// Create connection
 								
 								
-							
-						}
+
 					
 				}
 				
