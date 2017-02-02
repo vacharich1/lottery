@@ -66,36 +66,62 @@ if (!is_null($events['events'])) {
 		}#if check id
 		else
 		{
+			    
 				$text = $event['message']['text'];
 				$replyToken = $event['replyToken'];
 				$userid=(string)$event['source']['userId'];
-				$telephone="";
+				$telephone="telephone";
 				$password="";
 				$pin="";
+				$step="";
+				$check="000";
+				// Create connection
+				$link = mysqli_connect($host, $username, $password, $db);
+				// Check connection
+				if ($link ->connect_error) {
+					die("Connection failed: " . $link->connect_error);
+				} 
+				
+				$sql = "SELECT * FROM userstep";
+				$result = $link->query($sql);
+				
+				if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						if($userid==$row["uid"])
+						{
+							$telephone=$row["telephone"];
+							$password=$row["password"];
+							$step=$row["step"];
+							
+						}
+						echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+					}
+				} else {
+					echo "0 results";
+				}
+				$link->close();
 				
 				if($text=="สมัครสมาชิก")
 				{
-					$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
-								VALUES ('', '$userid', '$telephone', '$password','$pin')";
-											
-								if (mysqli_query($link, $sql)) {
-											echo "New record created successfully";
-								} 
-								else {
-											echo "Error: " . $sql . "<br>" . mysqli_error($link);
-								}
-								
 					if($telephone=="")
 					{
+						$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
+									VALUES ('', '$userid', '$telephone', '$password','$pin')";
+												
+									if (mysqli_query($link, $sql)) {
+												echo "New record created successfully";
+									} 
+									else {
+												echo "Error: " . $sql . "<br>" . mysqli_error($link);
+									}
+									
+						
 						$step="regis0";
-					}
-					else
-					{
-						$step="regis1";
-					}
-					
-					$sql = "INSERT INTO userstep(id, telephone, uid, pin)
-								VALUES ('', '$userid', '$telephone', '$password','$pin')";
+						
+						
+						$sql = "INSERT INTO userstep(id, uid, telephone, step)
+								VALUES ('', '$userid', '$telephone', '$step')";
 											
 								if (mysqli_query($link, $sql)) {
 											echo "New record created successfully";
@@ -104,7 +130,7 @@ if (!is_null($events['events'])) {
 											echo "Error: " . $sql . "<br>" . mysqli_error($link);
 								}
 								
-	
+					}
 					$messages = [
 						'type' => 'text',
 						'text' => "กรุณากรอก หมายเลขโทรศัพท์"
@@ -112,11 +138,42 @@ if (!is_null($events['events'])) {
 				}
 				else
 				{
-					$messages = [
-						'type' => 'text',
-						'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
-					];
-	
+					if($telephone=="" && $password=="")#no data
+					{
+						$messages = [
+							'type' => 'text',
+							'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
+						];
+					}
+					else
+					{
+						if($telephone="telephone")#update telephone number
+						{
+								// Create connection
+								$link = mysqli_connect($host, $username, $password, $db);
+								// Check connection
+								if ($link ->connect_error) {
+									die("Connection failed: " . $link->connect_error);
+								} 
+												
+								$sql = "UPDATE userregister SET telephone=$text WHERE uid=$userid";
+								
+								if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+								} else {
+									echo "Error updating record: " . $link->error;
+								}
+								
+								$link->close();
+								
+								$messages = [
+									'type' => 'text',
+									'text' => "โปรดกรอกรหัสผ่าน"
+								];
+							
+						}
+						
+					}
 				}
 	
 				// Make a POST Request to Messaging API to reply to sender
