@@ -1,4 +1,23 @@
 <?php
+$host= "sql6.freemysqlhosting.net";
+
+$db = "sql6156804";
+$CHAR_SET = "charset=utf8"; 
+ 
+$username = "sql6156804";    
+$password = "18n6QVscXg"; 
+	
+
+$link = mysqli_connect($host, $username, $password, $db);
+if (!$link) {
+    	die('Could not connect: ' . mysqli_connect_errno());
+}
+else
+{
+	echo "connect";
+}
+	
+	
 $access_token = 'XhHg/KrKivfXx2z2z+gM4rrkxgHVDrS8ZzqlmoZB9M3atvmyHBCRLFwvY08BCxTAKrX2gl1W+4hioLqRNIhEevHXg8MvNUDlL/sN2aDc/20+bXzxdmo6xnJA/i1gj0m/ObJ5qOKD8Lwi43SyEdkEKwdB04t89/1O/w1cDnyilFU=';
 
 // Get POST body content
@@ -49,9 +68,43 @@ if (!is_null($events['events'])) {
 		{
 				$text = $event['message']['text'];
 				$replyToken = $event['replyToken'];
+				$userid=$event['source']['userId'];
+				$telephone="";
+				$password="";
+				$pin="";
 				
 				if($text=="สมัครสมาชิก")
 				{
+					$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
+								VALUES ('', '$userid', '$telephone','$password' ,'$pin')";
+											
+								if (mysqli_query($link, $sql)) {
+											echo "New record created successfully";
+								} 
+								else {
+											echo "Error: " . $sql . "<br>" . mysqli_error($link);
+								}
+								
+					if($telephone=="")
+					{
+						$step="regis0";
+					}
+					else
+					{
+						$step="regis1";
+					}
+								
+					$sql = "INSERT INTO userstep(id, telephone, uid, step)
+								VALUES ('', '$telephone', '$userid','$step')";
+											
+								if (mysqli_query($link, $sql)) {
+											echo "New record created successfully";
+								} 
+								else {
+											echo "Error: " . $sql . "<br>" . mysqli_error($link);
+								}
+								
+	
 					$messages = [
 						'type' => 'text',
 						'text' => "กรุณากรอก หมายเลขโทรศัพท์"
