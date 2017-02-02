@@ -82,7 +82,7 @@ if (!is_null($events['events'])) {
 					die("Connection failed: " . $link->connect_error);
 				} 
 				
-				$sql = "SELECT * FROM userstep";
+				$sql = "SELECT * FROM userregister";
 				$result = $link->query($sql);
 				
 				if ($result->num_rows > 0) {
