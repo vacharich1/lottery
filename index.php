@@ -52,7 +52,7 @@ if (!is_null($events['events'])) {
 				$response = $bot->getProfile($event['source']['groupId']);
 				if ($response->isSucceeded()) {
 					$profile = $response->getJSONDecodedBody();
-					echo $profile['displayName'];
+					$name =(string)$profile['displayName'];
 					echo $profile['pictureUrl'];
 					echo $profile['statusMessage'];
 				}
@@ -60,7 +60,7 @@ if (!is_null($events['events'])) {
 				{
 					$messages = [
 						'type' => 'text',
-						'text' => "กรุณากรอก หมายเลขโทรศัพท์".$profile['displayName']."  "
+						'text' => "กรุณากรอก หมายเลขโทรศัพท์"
 					];
 				}
 				else
@@ -69,13 +69,18 @@ if (!is_null($events['events'])) {
 						'type' => 'text',
 						'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
 					];
+					
+					$messages1 = [
+						'type' => 'text',
+						'text' => $name
+					];
 				}
 	
 				// Make a POST Request to Messaging API to reply to sender
 				$url = 'https://api.line.me/v2/bot/message/reply';
 				$data = [
 					'replyToken' => $replyToken,
-					'messages' => [$messages],
+					'messages' => [$messages1],
 				];
 				$post = json_encode($data);
 				$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
