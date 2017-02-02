@@ -75,12 +75,37 @@ if (!is_null($events['events'])) {
 				$pin="";
 				$step="";
 				$check="000";
+				// Create connection
+				$link = mysqli_connect($host, $username, $password, $db);
+				// Check connection
+				if ($link ->connect_error) {
+					die("Connection failed: " . $link->connect_error);
+				} 
 				
+				$sql = "SELECT * FROM userregister";
+				$result = $link->query($sql);
+				
+				if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						if($userid==$row["uid"])
+						{
+							$telephone=$row["telephone"];
+							$password=$row["password"];
+							$step=$row["step"];
+							
+						}
+					}
+				} else {
+					echo "0 results";
+				}
+				#$link->close();
 				
 				if($text=="สมัครสมาชิก")
 				{
-					if($telephone=="")
+					if($telephone=="telephone")
 					{
+						$telephone="telephone2";
 						$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
 									VALUES ('', '$userid', '$telephone', '$password','$pin')";
 												
@@ -113,7 +138,7 @@ if (!is_null($events['events'])) {
 				}
 				else
 				{
-					if($telephone=="" && $password=="")#no data
+					if($telephone=="telephone" && $password=="")#no data
 					{
 						$messages = [
 							'type' => 'text',
@@ -122,7 +147,7 @@ if (!is_null($events['events'])) {
 					}
 					else
 					{
-						if($telephone="telephone")#update telephone number
+						if($telephone="telephone2")#update telephone number
 						{
 								// Create connection
 								$link = mysqli_connect($host, $username, $password, $db);
