@@ -127,13 +127,29 @@ if (!is_null($events['events'])) {
 
 					
 				}
-				
-				if($text=="สมัครสมาชิก")
+				else
 				{
-					if($telephone=="telephone")
+				
+					if($text=="สมัครสมาชิก")
 					{
-						$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
-									VALUES ('', '$userid', '$telephone', '$password','$pin')";
+						if($telephone=="telephone")
+						{
+							$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
+										VALUES ('', '$userid', '$telephone', '$password','$pin')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
+										
+							
+							$step="regis0";
+							
+							
+							$sql = "INSERT INTO userstep(id, uid, telephone, step)
+									VALUES ('', '$userid', '$telephone', '$step')";
 												
 									if (mysqli_query($link, $sql)) {
 												echo "New record created successfully";
@@ -142,37 +158,23 @@ if (!is_null($events['events'])) {
 												echo "Error: " . $sql . "<br>" . mysqli_error($link);
 									}
 									
-						
-						$step="regis0";
-						
-						
-						$sql = "INSERT INTO userstep(id, uid, telephone, step)
-								VALUES ('', '$userid', '$telephone', '$step')";
-											
-								if (mysqli_query($link, $sql)) {
-											echo "New record created successfully";
-								} 
-								else {
-											echo "Error: " . $sql . "<br>" . mysqli_error($link);
-								}
-								
-					}
-					$messages = [
-						'type' => 'text',
-						'text' => "กรุณากรอก หมายเลขโทรศัพท์"
-					];
-				}
-				else
-				{
-					if($telephone=="telephone" && $password=="")#no data
-					{
+						}
 						$messages = [
 							'type' => 'text',
-							'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
+							'text' => "กรุณากรอก หมายเลขโทรศัพท์"
 						];
 					}
+					else
+					{
+						if($telephone=="telephone" && $password=="")#no data
+						{
+							$messages = [
+								'type' => 'text',
+								'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
+							];
+						}
+					}
 				}
-	
 				// Make a POST Request to Messaging API to reply to sender
 				$url = 'https://api.line.me/v2/bot/message/reply';
 				$data = [
