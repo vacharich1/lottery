@@ -49,7 +49,6 @@ if (!is_null($events['events'])) {
 		{
 				$text = $event['message']['text'];
 				$replyToken = $event['replyToken'];
-				$name="aaaaaa";
 				
 				if($text=="สมัครสมาชิก")
 				{
@@ -64,11 +63,7 @@ if (!is_null($events['events'])) {
 						'type' => 'text',
 						'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
 					];
-					
-					$messages1 = [
-						'type' => 'text',
-						'text' => $name
-					];
+	
 				}
 	
 				// Make a POST Request to Messaging API to reply to sender
