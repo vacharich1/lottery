@@ -50,15 +50,7 @@ if (!is_null($events['events'])) {
 				$text = $event['message']['text'];
 				$replyToken = $event['replyToken'];
 				$name="aaaaaa";
-				$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('XhHg/KrKivfXx2z2z+gM4rrkxgHVDrS8ZzqlmoZB9M3atvmyHBCRLFwvY08BCxTAKrX2gl1W+4hioLqRNIhEevHXg8MvNUDlL/sN2aDc/20+bXzxdmo6xnJA/i1gj0m/ObJ5qOKD8Lwi43SyEdkEKwdB04t89/1O/w1cDnyilFU=');
-				$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '91b5009c7ff61ba858a732e635751a54']);
-				$response = $bot->getProfile((string)$event['source']['userId']);
-				if ($response->isSucceeded()) {
-					$profile = $response->getJSONDecodedBody();
-					$name =(string)$profile['displayName'];
-					echo $profile['pictureUrl'];
-					echo $profile['statusMessage'];
-				}
+				
 				if($text=="สมัครสมาชิก")
 				{
 					$messages = [
