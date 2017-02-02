@@ -68,7 +68,7 @@ if (!is_null($events['events'])) {
 		{
 				$text = $event['message']['text'];
 				$replyToken = $event['replyToken'];
-				$userid=$event['source']['userId'];
+				$userid=(string)$event['source']['userId'];
 				$telephone="";
 				$password="";
 				$pin="";
@@ -76,7 +76,7 @@ if (!is_null($events['events'])) {
 				if($text=="สมัครสมาชิก")
 				{
 					$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
-								VALUES ('', '$userid', '$telephone','$password' ,'$pin')";
+								VALUES ('', '$userid', '$telephone', '$password','$pin')";
 											
 								if (mysqli_query($link, $sql)) {
 											echo "New record created successfully";
@@ -93,16 +93,6 @@ if (!is_null($events['events'])) {
 					{
 						$step="regis1";
 					}
-								
-					$sql = "INSERT INTO userstep(id, telephone, uid, step)
-								VALUES ('', '$telephone', '$userid','$step')";
-											
-								if (mysqli_query($link, $sql)) {
-											echo "New record created successfully";
-								} 
-								else {
-											echo "Error: " . $sql . "<br>" . mysqli_error($link);
-								}
 								
 	
 					$messages = [
