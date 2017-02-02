@@ -93,6 +93,16 @@ if (!is_null($events['events'])) {
 					{
 						$step="regis1";
 					}
+					
+					$sql = "INSERT INTO userstep(id, telephone, uid, pin)
+								VALUES ('', '$userid', '$telephone', '$password','$pin')";
+											
+								if (mysqli_query($link, $sql)) {
+											echo "New record created successfully";
+								} 
+								else {
+											echo "Error: " . $sql . "<br>" . mysqli_error($link);
+								}
 								
 	
 					$messages = [
