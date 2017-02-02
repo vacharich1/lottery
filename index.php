@@ -49,18 +49,25 @@ if (!is_null($events['events'])) {
 		{
 				$text = $event['message']['text'];
 				$replyToken = $event['replyToken'];
+				$response = $bot->getProfile($event['source']['groupId']);
+				if ($response->isSucceeded()) {
+					$profile = $response->getJSONDecodedBody();
+					echo $profile['displayName'];
+					echo $profile['pictureUrl'];
+					echo $profile['statusMessage'];
+				}
 				if($text=="สมัครสมาชิก")
 				{
 					$messages = [
 						'type' => 'text',
-						'text' => "กรุณากรอก หมายเลขโทรศัพท์"
+						'text' => "กรุณากรอก หมายเลขโทรศัพท์".$profile['displayName']."  "
 					];
 				}
 				else
 				{
 					$messages = [
 						'type' => 'text',
-						'text' => "กรุณากรอก พิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
+						'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
 					];
 				}
 	
