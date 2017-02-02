@@ -95,7 +95,6 @@ if (!is_null($events['events'])) {
 							$step=$row["step"];
 							
 						}
-						echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
 					}
 				} else {
 					echo "0 results";
