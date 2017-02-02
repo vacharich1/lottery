@@ -100,7 +100,7 @@ if (!is_null($events['events'])) {
 				} else {
 					echo "0 results";
 				}
-				$link->close();
+				#$link->close();
 				
 				if($text=="สมัครสมาชิก")
 				{
@@ -164,7 +164,7 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 								}
 								
-								$link->close();
+								#$link->close();
 								
 								$messages = [
 									'type' => 'text',
