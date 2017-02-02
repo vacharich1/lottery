@@ -76,13 +76,57 @@ if (!is_null($events['events'])) {
 				$step="";
 				$check="000";
 				// Create connection
+				$sql1 = "SELECT * FROM userstep";
+				$result = $link->query($sql1);
 				
+				if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						if($userid==$row["uid"])
+						{
+							$step=$row["step"];
+						}
+						
+					
+					
+					}
+				}
+				if($step=="regis0")
+				{
+					$messages = [
+									'type' => 'text',
+									'text' => "โปรดกรอกรหัสผ่าน"
+								];
+					$telephone="telephone333";
+					if($telephone=="telephone333")#update telephone number
+						{
+								// Create connection
+								$link = mysqli_connect($host, $username, $password, $db);
+								// Check connection
+								if ($link ->connect_error) {
+									die("Connection failed: " . $link->connect_error);
+								} 
+												
+								$sql = "UPDATE userregister SET telephone=$text WHERE uid=$userid";
+								
+								if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+								} else {
+									echo "Error updating record: " . $link->error;
+								}
+								
+								#$link->close();
+								
+								
+							
+						}
+					
+				}
 				
 				if($text=="สมัครสมาชิก")
 				{
 					if($telephone=="telephone")
 					{
-						$telephone="telephone2";
 						$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
 									VALUES ('', '$userid', '$telephone', '$password','$pin')";
 												
@@ -121,35 +165,6 @@ if (!is_null($events['events'])) {
 							'type' => 'text',
 							'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
 						];
-					}
-					else
-					{
-						if($telephone="telephone2")#update telephone number
-						{
-								// Create connection
-								$link = mysqli_connect($host, $username, $password, $db);
-								// Check connection
-								if ($link ->connect_error) {
-									die("Connection failed: " . $link->connect_error);
-								} 
-												
-								$sql = "UPDATE userregister SET telephone=$text WHERE uid=$userid";
-								
-								if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-								} else {
-									echo "Error updating record: " . $link->error;
-								}
-								
-								#$link->close();
-								
-								$messages = [
-									'type' => 'text',
-									'text' => "โปรดกรอกรหัสผ่าน"
-								];
-							
-						}
-						
 					}
 				}
 	
