@@ -97,7 +97,30 @@ if (!is_null($events['events'])) {
 									'text' => "โปรดกรอกรหัสผ่าน"
 								];
 								
+							$link = mysqli_connect($host, $username, $password, $db);
+							// Check connection
+							if ($link ->connect_error) {
+								die("Connection failed: " . $link->connect_error);
+							} 
 							
+							$telephone=$text;
+							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							$sql = "UPDATE userstep SET step='regis1' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+								
+								#$link->close();
 					}
 					else
 					{
@@ -108,9 +131,6 @@ if (!is_null($events['events'])) {
 					}
 					
 						// Create connection
-								
-								
-
 					
 				}
 				else
