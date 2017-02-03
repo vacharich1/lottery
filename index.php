@@ -97,12 +97,6 @@ if (!is_null($events['events'])) {
 									'text' => "โปรดกรอกรหัสผ่าน"
 								];
 								
-							$link = mysqli_connect($host, $username, $password, $db);
-							// Check connection
-							if ($link ->connect_error) {
-								die("Connection failed: " . $link->connect_error);
-							} 
-							
 							$telephone=$text;
 							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE userid='".$userid."'";
 															
