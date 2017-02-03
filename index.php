@@ -92,11 +92,24 @@ if (!is_null($events['events'])) {
 				{
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
-							$messages = [
-									'type' => 'text',
-									'text' => "โปรดกรอกรหัสผ่าน"
-								];
+							
+							$host= "sql6.freemysqlhosting.net";
+
+							$db = "sql6156804";
+							$CHAR_SET = "charset=utf8"; 
+							 
+							$username = "sql6156804";    
+							$password = "18n6QVscXg"; 
 								
+							
+							$link = mysqli_connect($host, $username, $password, $db);
+							if (!$link) {
+									die('Could not connect: ' . mysqli_connect_errno());
+							}
+							else
+							{
+								echo "connect";
+							}	
 							$telephone=$text;
 							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE userid='".$userid."'";
 															
@@ -106,6 +119,22 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
+							
+							
+
+							$sql = "UPDATE userstep SET telephone='regis1' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "โปรดกรอกรหัสผ่าน"
+								];
 							
 					}
 					else
