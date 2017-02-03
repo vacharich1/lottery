@@ -112,15 +112,7 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
-							$sql = "UPDATE userstep SET step='regis1' WHERE userid='".$userid."'";
-															
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
-								
-								#$link->close();
+							
 					}
 					else
 					{
