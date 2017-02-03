@@ -111,7 +111,7 @@ if (!is_null($events['events'])) {
 								echo "connect";
 							}	
 							$telephone=$text;
-							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE userid='".$userid."'";
+							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE userid='Ub5f45b12f0f8f8a3a08e5b52ebbcc96b'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
