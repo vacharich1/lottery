@@ -150,8 +150,8 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[#$%^&*]+$/", $text) == 1)
 					{
 							
-							$telephone=$text;
-							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
+							$password=$text;
+							$sql = "UPDATE userregister SET password='".$password."' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -162,7 +162,7 @@ if (!is_null($events['events'])) {
 							
 							
 
-							$sql = "UPDATE userstep SET step='regis1' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -173,7 +173,7 @@ if (!is_null($events['events'])) {
 							
 							$messages = [
 									'type' => 'text',
-									'text' => "โปรดกรอกรหัสผ่าน"
+									'text' => "สมัครสมาชิกเรียบร้อย"
 								];
 							
 					}
