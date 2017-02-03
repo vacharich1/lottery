@@ -103,9 +103,8 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
 							
-							$aaaa='Ub5f45b12f0f8f8a3a08e5b52ebbcc96b';
-							$aaaa1='0819141177';
-							$sql = "UPDATE userregister SET telephone='".$aaaa1."' WHERE userid='".$aaaa."'";
+							$telephone=$text;
+							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -116,7 +115,7 @@ if (!is_null($events['events'])) {
 							
 							
 
-							$sql = "UPDATE userstep SET telephone='regis1' WHERE userid='".$userid."'";
+							$sql = "UPDATE userstep SET telephone='regis1' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
