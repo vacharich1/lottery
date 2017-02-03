@@ -115,7 +115,7 @@ if (!is_null($events['events'])) {
 							
 							
 
-							$sql = "UPDATE userstep SET telephone='regis1' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep SET step='regis1' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -135,6 +135,57 @@ if (!is_null($events['events'])) {
 							$messages = [
 									'type' => 'text',
 									'text' => "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น"
+								];
+							$messages1 = [
+									'type' => 'text',
+									'text' => "โปรดพิมหมายเลขโทรศัพท์ใหม่อีกครั้ง"
+								];
+					}
+					
+						// Create connection
+					
+				}
+				else if($step=="regis1")
+				{
+					if(preg_match("/^[#$%^&*]+$/", $text) == 1)
+					{
+							
+							$telephone=$text;
+							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
+							
+
+							$sql = "UPDATE userstep SET step='regis1' WHERE uid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "โปรดกรอกรหัสผ่าน"
+								];
+							
+					}
+					else
+					{
+							$messages = [
+									'type' => 'text',
+									'text' => "รหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*"
+								];
+							$messages1 = [
+									'type' => 'text',
+									'text' => "โปรดพิมรหัสผ่านใหม่อีกครั้ง"
 								];
 					}
 					
@@ -186,6 +237,7 @@ if (!is_null($events['events'])) {
 								'type' => 'text',
 								'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า สมัครสามาชิก เพื่อสมัครสมาชิก"
 							];
+							
 						}
 					}
 				}
@@ -193,7 +245,7 @@ if (!is_null($events['events'])) {
 				$url = 'https://api.line.me/v2/bot/message/reply';
 				$data = [
 					'replyToken' => $replyToken,
-					'messages' => [$messages],
+					'messages' => [$messages,$messages1],
 				];
 				$post = json_encode($data);
 				$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
