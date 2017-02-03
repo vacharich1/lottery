@@ -16,6 +16,16 @@ else
 {
 	echo "connect";
 }
+
+$aaaa='Ub5f45b12f0f8f8a3a08e5b52ebbcc96b';
+$aaaa1='0819141177';
+$sql = "UPDATE userregister SET telephone='".$aaaa1."' WHERE userid='".$aaaa."'";
+															
+if ($link->query($sql) === TRUE) {
+		echo "Record updated successfully";
+} else {
+		echo "Error updating record: " . $link->error;
+}
 	
 	
 $access_token = 'XhHg/KrKivfXx2z2z+gM4rrkxgHVDrS8ZzqlmoZB9M3atvmyHBCRLFwvY08BCxTAKrX2gl1W+4hioLqRNIhEevHXg8MvNUDlL/sN2aDc/20+bXzxdmo6xnJA/i1gj0m/ObJ5qOKD8Lwi43SyEdkEKwdB04t89/1O/w1cDnyilFU=';
