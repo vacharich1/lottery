@@ -93,25 +93,9 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
 							
-							$host= "sql6.freemysqlhosting.net";
-
-							$db = "sql6156804";
-							$CHAR_SET = "charset=utf8"; 
-							 
-							$username = "sql6156804";    
-							$password = "18n6QVscXg"; 
-								
-							
-							$link = mysqli_connect($host, $username, $password, $db);
-							if (!$link) {
-									die('Could not connect: ' . mysqli_connect_errno());
-							}
-							else
-							{
-								echo "connect";
-							}	
-							$telephone='0819141177';
-							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE userid='Ub5f45b12f0f8f8a3a08e5b52ebbcc96b'";
+							$aaaa='Ub5f45b12f0f8f8a3a08e5b52ebbcc96b';
+							$aaaa1='0819141177';
+							$sql = "UPDATE userregister SET telephone='".$aaaa1."' WHERE userid='".$aaaa."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
