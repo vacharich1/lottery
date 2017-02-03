@@ -132,7 +132,7 @@ if (!is_null($events['events'])) {
 					}
 					else
 					{
-							if($text=="sss")
+							$text=="สมัครสมาชิก"
 							{
 								$messages = [
 									'type' => 'text',
@@ -144,7 +144,7 @@ if (!is_null($events['events'])) {
 							{
 								$messages = [
 										'type' => 'text',
-										'text' => "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น"
+										'text' => "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น \n\nโปรดพิมหมายเลขโทรศัพท์ใหม่อีกครั้ง"
 									];
 								$messages1 = [
 										'type' => 'text',
@@ -192,7 +192,7 @@ if (!is_null($events['events'])) {
 					{
 							$messages = [
 									'type' => 'text',
-									'text' => "รหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*"
+									'text' => "รหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
 								];
 							$messages1 = [
 									'type' => 'text',
@@ -256,7 +256,7 @@ if (!is_null($events['events'])) {
 				$url = 'https://api.line.me/v2/bot/message/reply';
 				$data = [
 					'replyToken' => $replyToken,
-					'messages' => [$messages,$messages1],
+					'messages' => [$messages],
 				];
 				$post = json_encode($data);
 				$headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
