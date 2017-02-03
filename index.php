@@ -132,7 +132,7 @@ if (!is_null($events['events'])) {
 					}
 					else
 					{
-							if($text=="สมัครสมาชิก")
+							if($text=="sss")
 							{
 								$messages = [
 									'type' => 'text',
