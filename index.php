@@ -220,7 +220,6 @@ if (!is_null($events['events'])) {
 										while($row = $result->fetch_assoc()) {
 											if($userid==$row["uid"])
 											{
-												$step=$row["step"];
 												$telephone=$row["telephone"];
 												$password=$row["password"];
 											}
