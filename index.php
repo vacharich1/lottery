@@ -256,7 +256,7 @@ if (!is_null($events['events'])) {
 										echo "Error updating record: " . $link->error;
 								}
 								
-								$text1="สมัครสมาชิกเรียบร้อย \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n ข้อมูลถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n";
+								$text1="สมัครสมาชิกเรียบร้อย \n\nเบอร์ ".$telephone."\nรหัส : ".$text."\n ถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n";
 								$messages = [
 										'type' => 'text',
 										'text' => $text1
