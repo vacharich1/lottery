@@ -191,6 +191,22 @@ if (!is_null($events['events'])) {
 										'text' => $text22
 							];	
 						}
+						if($text=='*')
+						{
+							$sql = "UPDATE userstep SET step='regis0' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								$text1="กรุณากรอกหมายเลขโทรศัพท์";
+								$messages = [
+										'type' => 'text',
+										'text' => $text1
+									];
+						}
 
 						
 							
