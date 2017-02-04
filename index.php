@@ -184,7 +184,7 @@ if (!is_null($events['events'])) {
 								}
 							}
 									
-							$sql = "INSERT INTO member(id, uid , telephone, password)
+							$sql = "INSERT INTO member(id, userid , telephone, password)
 										VALUES ('', '$userid', '$telephone', '$password')";
 													
 										if (mysqli_query($link, $sql)) {
