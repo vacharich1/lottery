@@ -157,6 +157,57 @@ if (!is_null($events['events'])) {
 						// Create connection
 					
 				}
+				else if($step=="doneregis")
+				{
+						if($text=='#')
+						{	
+							$sql1 = "SELECT * FROM userregister";
+									$result = $link->query($sql1);
+									
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											if($userid==$row["uid"])
+											{
+												$step=$row["step"];
+												$telephone=$row["telephone"];
+												$password=$row["password"];
+											}
+										}
+									}
+									
+							$sql = "INSERT INTO member(id, uid , telephone, password)
+										VALUES ('', '$userid', '$telephone', '$password')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
+							$messages = [
+										'type' => 'text',
+										'text' => "ยืนยันการเป็นสมาชิก \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n เริ่มใช้งานได้เลย พิม คำสั่งเพื่อดูวิธีใช้"
+									];			
+
+							if($text='*')
+							{
+								$messages = [
+										'type' => 'text',
+										'text' => "โปรดพิมหมายเลยโทรศัพท์"
+									];
+									
+								$sql = "UPDATE userstep SET step='regis0' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							}
+							
+						}
+				}
 				else if($step=="regis1")
 				{
 					if(preg_match("/^[a-zA-Z0-9#$%^&*!]+$/", $text) == 1)
@@ -195,7 +246,7 @@ if (!is_null($events['events'])) {
 										echo "Error updating record: " . $link->error;
 								}
 								
-								$text1="สมัครสมาชิกเรียบร้อย \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n ข้อมูลถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n";
+								$text1="สมัครสมาชิกเรียบร้อย \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n ข้อมูลถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n"
 								$messages = [
 										'type' => 'text',
 										'text' => $text1
