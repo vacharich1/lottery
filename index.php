@@ -157,61 +157,6 @@ if (!is_null($events['events'])) {
 						// Create connection
 					
 				}
-				else if($step=="doneregis")
-				{
-						if($text=='#')
-						{	
-							$sql1 = "SELECT * FROM userregister";
-									$result = $link->query($sql1);
-									
-									if ($result->num_rows > 0) {
-										// output data of each row
-										while($row = $result->fetch_assoc()) {
-											if($userid==$row["uid"])
-											{
-												$step=$row["step"];
-												$telephone=$row["telephone"];
-												$password=$row["password"];
-											}
-										}
-									}
-									
-							$sql = "INSERT INTO member(id, uid , telephone, password)
-										VALUES ('', '$userid', '$telephone', '$password')";
-													
-										if (mysqli_query($link, $sql)) {
-													echo "New record created successfully";
-										} 
-										else {
-													echo "Error: " . $sql . "<br>" . mysqli_error($link);
-										}
-							$text22="ยืนยันการเป็นสมาชิก \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n เริ่มใช้งานได้เลย พิม คำสั่งเพื่อดูวิธีใช้"			
-							$messages = [
-										'type' => 'text',
-										'text' => $text22
-							];	
-						}
-						if($text=='*')
-						{
-							$sql = "UPDATE userstep SET step='regis0' WHERE uid='".$userid."'";
-																
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								
-								$text1="กรุณากรอกหมายเลขโทรศัพท์";
-								$messages = [
-										'type' => 'text',
-										'text' => $text1
-									];
-						}
-
-						
-							
-						
-				}
 				else if($step=="regis1")
 				{
 					if(preg_match("/^[a-zA-Z0-9#$%^&*!]+$/", $text) == 1)
