@@ -200,7 +200,7 @@ if (!is_null($events['events'])) {
 										'text' => $text33
 									];			
 						}
-						if($text='*')
+						if($text=='*')
 						{
 								$messages = [
 										'type' => 'text',
