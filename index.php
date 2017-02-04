@@ -158,41 +158,63 @@ if (!is_null($events['events'])) {
 				}
 				else if($step=="regis1")
 				{
-					if(preg_match("/^[#$%^&*]+$/", $text) == 1)
+					if(preg_match("/^[a-zA-Z0-9#$%^&*!]+$/", $text) == 1)
 					{
-							
-							$password=$text;
-							$sql = "UPDATE userregister SET password='".$password."' WHERE uid='".$userid."'";
-															
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
+							$chars = str_split($text);
+							foreach ($chars as $char)
+							{
+								   if ($char === '#' || $char === '$' || $char === '%' || $char === '^' || $char === '!' || $char === '&' || $char === '*')
+								   {
+									   $check = "pass";
+								   }
+								   else
+								   {
+									   $check = "not pass";
+								   }
 							}
-							
-							
-							
-
-							$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
-															
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
+							if($check == "pass")
+							{
+								$password=$text;
+								$sql = "UPDATE userregister SET password='".$password."' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								
+								
+	
+								$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								
+								$messages = [
+										'type' => 'text',
+										'text' => "สมัครสมาชิกเรียบร้อย"
+									];
 							}
-							
-							
-							$messages = [
+							else
+							{
+								$messages = [
 									'type' => 'text',
-									'text' => "สมัครสมาชิกเรียบร้อย"
+									'text' => "เพื่อความปลอดภัยรหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
 								];
+								
+							}
 							
 					}
 					else
 					{
 							$messages = [
 									'type' => 'text',
-									'text' => "รหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
+									'text' => "เพื่อความปลอดภัยรหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
 								];
 							$messages1 = [
 									'type' => 'text',
