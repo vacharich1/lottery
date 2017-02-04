@@ -95,7 +95,6 @@ if (!is_null($events['events'])) {
 						if($userid==$row["uid"])
 						{
 							$step=$row["step"];
-							$telephone=$row["telephone"];
 						}
 					}
 				}
@@ -127,7 +126,7 @@ if (!is_null($events['events'])) {
 							
 							$messages = [
 									'type' => 'text',
-									'text' => "โปรดกรอกรหัสผ่าน ประกอดตัวตัวหนังสือ a-z เเละอักษรพิเศษอย่างน้อย1ตัวคือ #$%^*!"
+									'text' => "โปรดกรอกรหัสผ่าน ประกอบตัวตัวหนังสือ a-z เเละอักษรพิเศษอย่างน้อย1ตัว"
 								];
 							
 					}
@@ -198,7 +197,7 @@ if (!is_null($events['events'])) {
 								$text1="สมัครสมาชิกเรียบร้อย \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n ข้อมูลถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n";
 								$messages = [
 										'type' => 'text',
-										'text' => 
+										'text' => $text1
 									];
 							}
 							else
