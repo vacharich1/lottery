@@ -95,6 +95,7 @@ if (!is_null($events['events'])) {
 						if($userid==$row["uid"])
 						{
 							$step=$row["step"];
+							$telephone=$row["telephone"];
 						}
 					}
 				}
@@ -126,7 +127,7 @@ if (!is_null($events['events'])) {
 							
 							$messages = [
 									'type' => 'text',
-									'text' => "โปรดกรอกรหัสผ่าน"
+									'text' => "โปรดกรอกรหัสผ่าน ประกอดตัวตัวหนังสือ a-z เเละอักษรพิเศษอย่างน้อย1ตัวคือ #$%^*!"
 								];
 							
 					}
@@ -155,6 +156,57 @@ if (!is_null($events['events'])) {
 					
 						// Create connection
 					
+				}
+				else if($step=="doneregis")
+				{
+						if($text=='#')
+						{	
+							$sql1 = "SELECT * FROM userregister";
+									$result = $link->query($sql1);
+									
+									if ($result->num_rows > 0) {
+										// output data of each row
+										while($row = $result->fetch_assoc()) {
+											if($userid==$row["uid"])
+											{
+												$step=$row["step"];
+												$telephone=$row["telephone"];
+												$password=$row["password"];
+											}
+										}
+									}
+									
+							$sql = "INSERT INTO member(id, uid , telephone, password)
+										VALUES ('', '$userid', '$telephone', '$password')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
+							$messages = [
+										'type' => 'text',
+										'text' => "ยืนยันการเป็นสมาชิก \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n เริ่มใช้งานได้เลย พิม คำสั่งเพื่อดูวิธีใช้"
+									];			
+
+							if($text='*')
+							{
+								$messages = [
+										'type' => 'text',
+										'text' => "โปรดพิมหมายเลยโทรศัพท์"
+									];
+									
+								$sql = "UPDATE userstep SET step='regis0' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							}
+							
+						}
 				}
 				else if($step=="regis1")
 				{
@@ -197,14 +249,14 @@ if (!is_null($events['events'])) {
 								
 								$messages = [
 										'type' => 'text',
-										'text' => "สมัครสมาชิกเรียบร้อย"
+										'text' => "สมัครสมาชิกเรียบร้อย \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$text."\n ข้อมูลถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n"
 									];
 							}
 							else
 							{
 								$messages = [
 									'type' => 'text',
-									'text' => "เพื่อความปลอดภัยรหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
+									'text' => "รหัสผ่านมีได้เเค่ตัวหนังสือ a-z 0-9 เเละอักษรพิเศษเท่านั้น\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
 								];
 								
 							}
@@ -214,7 +266,7 @@ if (!is_null($events['events'])) {
 					{
 							$messages = [
 									'type' => 'text',
-									'text' => "เพื่อความปลอดภัยรหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
+									'text' => "เพื่อความปลอดภัยรหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*!\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
 								];
 							$messages1 = [
 									'type' => 'text',
