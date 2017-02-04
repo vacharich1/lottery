@@ -157,14 +157,6 @@ if (!is_null($events['events'])) {
 						// Create connection
 					
 				}
-				else if($step=="doneregis")
-				{
-						
-
-						
-							
-						
-				}
 				else if($step=="regis1")
 				{
 					if(preg_match("/^[a-zA-Z0-9#$%^&*!]+$/", $text) == 1)
