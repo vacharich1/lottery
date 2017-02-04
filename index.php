@@ -114,6 +114,15 @@ if (!is_null($events['events'])) {
 							}
 							
 							
+							$sql = "UPDATE userstep SET telephone='".$telephone."' WHERE uid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
 							
 
 							$sql = "UPDATE userstep SET step='regis1' WHERE uid='".$userid."'";
@@ -190,9 +199,9 @@ if (!is_null($events['events'])) {
 										'type' => 'text',
 										'text' => $text33
 									];			
-
-							if($text='*')
-							{
+						}
+						if($text='*')
+						{
 								$messages = [
 										'type' => 'text',
 										'text' => "โปรดพิมหมายเลยโทรศัพท์"
