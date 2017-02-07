@@ -379,7 +379,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n ต้องการดูเมนูพิม--> คำสั่ง"
+								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n ต้องการดูเมนูพิม\n --> คำสั่ง"
 							];
 					}
 					else if($text=="*")
@@ -403,7 +403,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยกเลิก เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n ต้องการดูเมนูพิม--> คำสั่ง"
+								'text' => "ยกเลิก เรียบร้อย\nคุณมีเครดิตเหลือ ".$credit."\n ต้องการดูเมนูพิม\n --> คำสั่ง"
 							];
 					}
 					else
@@ -676,8 +676,8 @@ if (!is_null($events['events'])) {
 							$step="regis0";
 							
 							
-							$sql = "INSERT INTO userstep(id, uid, telephone, step)
-									VALUES ('', '$userid', '$telephone', '$step')";
+							$sql = "INSERT INTO userstep(id, uid, telephone, step, credit, usernotcon, usemoney)
+									VALUES ('', '$userid', '$telephone', '$step', '0', '0', '0')";
 												
 									if (mysqli_query($link, $sql)) {
 												echo "New record created successfully";
