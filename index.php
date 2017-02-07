@@ -343,26 +343,6 @@ if (!is_null($events['events'])) {
 										$priceall=$row["usemoney"];
 								}
 							}
-						
-						$pricenew=(int)$priceall+(int)$price_buy_last;
-						$newcredit=(int)$credit-(int)$price_buy_last;
-						
-						$sql = "UPDATE userstep SET credit='".$newcredit."' WHERE uid='".$userid."'";
-																		
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
-						sleep(0.2);
-						
-						$sql = "UPDATE userstep SET usemoney='".$pricenew."' WHERE uid='".$userid."'";
-																		
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
 							
 							
 						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
