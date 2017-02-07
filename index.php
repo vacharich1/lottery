@@ -70,18 +70,15 @@ if (!is_null($events['events'])) {
 					];
 				}
 				
-				$sql1 = "SELECT * FROM userstep";
+				$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
 				$result = $link->query($sql1);
 				$check_member="1";		
 				$credit="0";
 				if ($result->num_rows > 0) {
 				// output data of each row
 					while($row = $result->fetch_assoc()) {
-							if($userid==$row["uid"])
-							{
 								$step=$row["step"];
 								$credit=$row["credit"];
-							}
 						}
 					}
 				
@@ -118,6 +115,14 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 					}
+					
+				}
+				else if($step=="5")
+				{
+						$messages = [
+							'type' => 'text',
+							'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
+						];
 					
 				}
 				else if($step=="1")#กด 1
@@ -251,10 +256,7 @@ if (!is_null($events['events'])) {
 					
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
-								$messages = [
-								'type' => 'text',
-								'text' => "กด# เพื่อยืนยันการสั่งซื้อ\nกด* เพื่อยกเลิก"
-							];
+						
 						
 						$sql = "UPDATE userstep SET step='1111' WHERE uid='".$userid."'";
 																		
@@ -271,6 +273,20 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}
+						
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "กด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
+						];
+					}
+					else
+					{
+							$messages = [
+								'type' => 'text',
+								'text' => "จำนวนเงินต้องเป็นตัวเลขเท่านั้น"
+							];
+						
 						
 					}
 				}
@@ -298,7 +314,7 @@ if (!is_null($events['events'])) {
 								'text' => "ยืนยันการซื้อ เรียบร้อย"
 							];
 					}
-					if($text=="*")
+					else if($text=="*")
 					{
 						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																		
@@ -307,6 +323,13 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}
+					}
+					else
+					{
+						$messages = [
+								'type' => 'text',
+								'text' => "กด# เพื่อยืนยันการสั่งซื้อ\nกด* เพื่อยกเลิก"
+							];
 					}
 					
 				}
