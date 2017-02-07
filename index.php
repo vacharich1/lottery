@@ -49,7 +49,7 @@ if (!is_null($events['events'])) {
 				if($event['source']['userId']==$row["userid"])
 					{
 						$check_member="0";
-						$userid=$row["uid"];
+						$userid=$row["userid"];
 					}
 				}
 			}
