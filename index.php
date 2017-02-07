@@ -83,7 +83,7 @@ if (!is_null($events['events'])) {
 						}
 					}
 				
-				if($step=="doneregis0")
+				if($step=="doneregis")
 				{
 					if($text=="1")
 					{
