@@ -274,6 +274,14 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 						
+						$sql = "UPDATE member SET usernotcon='".$text."' WHERE uid='".$userid."'";
+																
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
 						$sql = "UPDATE lottery SET price='".$text."' WHERE uid='".$userid."' AND buy_book='book'";
 																
 						if ($link->query($sql) === TRUE) {
@@ -314,6 +322,41 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="#")
 					{
+						
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+										$price_buy_last=$row["usernotcon"];
+										$priceall=$row["usemoney"];
+								}
+							}
+						
+						$pricenew=(int)$priceall+(int)$price_buy_last;
+						$newcredit=(int)$credit-(int)$price_buy_last;
+						
+						$sql = "UPDATE userstep SET credit='".$newcredit."' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						sleep(0.2);
+						
+						$sql = "UPDATE userstep SET usemoney='".$pricenew."' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+							
+							
 						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
@@ -555,7 +598,22 @@ if (!is_null($events['events'])) {
 								}
 								
 								
-								
+								$sql = "UPDATE userstep SET usemoney='0' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								sleep(0.2);
+								$sql = "UPDATE userstep SET usernotcon='0' WHERE uid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								sleep(0.2);
 	
 								$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																
