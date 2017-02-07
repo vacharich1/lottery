@@ -584,24 +584,6 @@ if (!is_null($events['events'])) {
 								} else {
 										echo "Error updating record: " . $link->error;
 								}
-								
-								
-								$sql = "UPDATE userstep SET usemoney='0' WHERE uid='".$userid."'";
-																
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								sleep(0.2);
-								$sql = "UPDATE userstep SET usernotcon='0' WHERE uid='".$userid."'";
-																
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								sleep(0.2);
 	
 								$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																
