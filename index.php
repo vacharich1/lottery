@@ -379,11 +379,20 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str
+								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n ต้องการดูเมนูพิม--> คำสั่ง"
 							];
 					}
 					else if($text=="*")
 					{
+						$sql = "DELETE FROM lottery WHERE uid='".$userid."' AND buy_book='book'";
+										
+										if ($link->query($sql) === TRUE) {
+											echo "Record deleted successfully";
+										} else {
+											echo "Error deleting record: " . $conn->error;
+										}
+										
+										
 						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
@@ -391,6 +400,11 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยกเลิก เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n ต้องการดูเมนูพิม--> คำสั่ง"
+							];
 					}
 					else
 					{
