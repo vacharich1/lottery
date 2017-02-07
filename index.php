@@ -133,6 +133,14 @@ if (!is_null($events['events'])) {
 						
 					
 					}
+					else if($text=="3")
+					{
+							$messages = [
+								'type' => 'text',
+								'text' => "เเจ้งยอดโอน\n ขออภัยระบบยังไม่สมบูรณ์"
+							];
+						
+					}
 					else if($text=="5")
 					{
 							$messages = [
@@ -145,7 +153,7 @@ if (!is_null($events['events'])) {
 					{
 							$messages = [
 								'type' => 'text',
-								'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
+								'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท\nเเจ้งยอดถอน\n ขออภัยระบบยังไม่สมบูรณ์"
 							];
 						
 					}
