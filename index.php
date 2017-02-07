@@ -87,11 +87,57 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="1")
 					{
-						$messages = [
-						'type' => 'text',
-						'text' => "เเทงหวยสองตัวบน สองตัวล่าง\nกรุณาพิมพ์หมายเลขที่ต้องการเเทง"
-					];
+							$messages = [
+							'type' => 'text',
+							'text' => "กด 1 เเทงสองตัวบนเเละล่าง\nกด2 เเทงสองตัวบน\nกด3 เเทงสองตัวล่าง\nกด4 เเทงสามตัว\nกด0 กลับสููเมนูหลัก"
+						];
+						
+						$sql = "UPDATE userstep SET step='1' WHERE uid='".$userid."'";
+																
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
 					}
+					else if($text=="2")
+					{
+						
+							$messages = [
+							'type' => 'text',
+							'text' => "ระบบได้ตั้งบัญชีธนาคารไว้เป็นของ กสิกรไทย\nเลือกบัญชีธนาคารอื่นๆ\nกด1 scb\nกด2 tmb\nกด3 เพื่อกำหนดจำนวนเงินที่ต้องการโอน\nกด0 กลับสููเมนูหลัก"
+							];
+						
+						$sql = "UPDATE userstep SET step='2' WHERE uid='".$userid."'";
+																
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+					}
+					
+				}
+				if($step=="1")
+				{
+						if($text=="0")
+						{
+							// Build message to reply back
+							$messages = [
+								'type' => 'text',
+								'text' => "กด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
+							];
+							
+							$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+						}
+						
 					
 				}
 				
