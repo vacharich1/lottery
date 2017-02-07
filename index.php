@@ -38,20 +38,63 @@ $events = json_decode($content, true);
 if (!is_null($events['events'])) {
 	// Loop through each event
 	foreach ($events['events'] as $event) {
+		
+		$sql1 = "SELECT * FROM member";
+		$result = $link->query($sql1);
+		$check_member="1";		
+		$userid="";
+		if ($result->num_rows > 0) {
+		// output data of each row
+			while($row = $result->fetch_assoc()) {
+				if($event['source']['userId']==$row["uid"])
+					{
+						$check_member="0";
+						$userid=$row["uid"];
+					}
+				}
+			}
 		// Reply only when message sent is in 'text' format
-		if($event['source']['userId'] == 'U7fd7eee8c6ab03c5f8c12b51b47a09c8')
+		if($check_member=="0")
 		{
 			if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
 				// Get text sent
 				$text = $event['message']['text'];
 				// Get replyToken
 				$replyToken = $event['replyToken'];
-	
-				// Build message to reply back
-				$messages = [
-					'type' => 'text',
-					'text' => "asddasdasd"
-				];
+				if($text=="คำสั่ง")
+				{
+					// Build message to reply back
+					$messages = [
+						'type' => 'text',
+						'text' => "กด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
+					];
+				}
+				
+				$sql1 = "SELECT * FROM userstep";
+				$result = $link->query($sql1);
+				$check_member="1";		
+				if ($result->num_rows > 0) {
+				// output data of each row
+					while($row = $result->fetch_assoc()) {
+							if($userid==$row["uid"])
+							{
+								$step=$row["step"];
+							}
+						}
+					}
+				
+				if($step=="doneregis0")
+				{
+					if($text=="1")
+					{
+						$messages = [
+						'type' => 'text',
+						'text' => "เเทงหวยสองตัวบน สองตัวล่าง\nกรุณาพิมพ์หมายเลขที่ต้องการเเทง"
+					];
+					}
+					
+				}
+				
 	
 				// Make a POST Request to Messaging API to reply to sender
 				$url = 'https://api.line.me/v2/bot/message/reply';
