@@ -120,12 +120,13 @@ if (!is_null($events['events'])) {
 				}
 				if($step=="1")
 				{
+						$credit="0";
 						if($text=="0")
 						{
 							// Build message to reply back
 							$messages = [
 								'type' => 'text',
-								'text' => "กด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
+								'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
 							];
 							
 							$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
@@ -137,7 +138,103 @@ if (!is_null($events['events'])) {
 							}
 							
 						}
+						else
+						{
+							$sql1 = "SELECT * FROM userstep";
+							$result = $link->query($sql1);
+							$check_member="1";		
+							if ($result->num_rows > 0) {
+							// output data of each row
+								while($row = $result->fetch_assoc()) {
+										if($userid==$row["uid"])
+										{
+											$credit=$row["credit"];
+										}
+									}
+								}	
+							
+							if($credit=="0")
+							{
+									$messages = [
+									'type' => 'text',
+									'text' => "กรุณาเติมเงินกด 2 เพิ่มเข้าใช้งานในส่วนนี้ ขออภัยอย่างสูง"
+								];
+								
+							}
+							
+						}
+						if($credit!="0")
+						{
+							if($text=="1")
+							{
+								// Build message to reply back
+								$messages = [
+									'type' => 'text',
+									'text' => "คุณมีเครดิต ".$credit." บาท\nกรุณากรอกหมายเลข 2 ตัว"
+								];
+								
+								$sql = "UPDATE userstep SET step='11' WHERE uid='".$userid."'";
+																	
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+							}
+						}
 						
+					
+				}
+				if($step=="11")
+				{
+					$count_text = strlen($text);
+					if($count_text==2)
+					{
+						if(preg_match("/^[0-9]+$/", $text) == 1)
+						{
+								$messages = [
+								'type' => 'text',
+								'text' => "โปรดกรอกจำนวนเงิน"
+							];
+							$sql = "UPDATE userstep SET step='111' WHERE uid='".$userid."'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+						}
+						else
+						{
+							$messages = [
+								'type' => 'text',
+								'text' => "หมายเลขเป็นได้เฉพาะตัวเลขเท่านั้น"
+							];
+						}
+					}
+					else
+					{
+						if(preg_match("/^[0-9]+$/", $text) == 1)
+						{
+								$messages = [
+								'type' => 'text',
+								'text' => "หมายเลขได้เเค่ 00-99เท่านั้น"
+							];
+						}
+						else
+						{
+							$messages = [
+								'type' => 'text',
+								'text' => "หมายเลขเป็นได้เฉพาะตัวเลขเท่านั้น"
+							];
+						}
+						
+					}
+					
+				}
+				if($step=="111")
+				{
 					
 				}
 				
