@@ -115,14 +115,22 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 					}
-					
-				}
-				else if($step=="5")
-				{
-						$messages = [
-							'type' => 'text',
-							'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
-						];
+					else if($step=="5")
+					{
+							$messages = [
+								'type' => 'text',
+								'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
+							];
+						
+					}
+					else if($step=="4")
+					{
+							$messages = [
+								'type' => 'text',
+								'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
+							];
+						
+					}
 					
 				}
 				else if($step=="1")#กด 1
