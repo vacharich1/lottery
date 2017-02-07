@@ -187,7 +187,7 @@ if (!is_null($events['events'])) {
 							}
 							
 						}
-						else
+						else if($text=="1")
 						{
 							$sql1 = "SELECT * FROM userstep";
 							$result = $link->query($sql1);
@@ -210,28 +210,37 @@ if (!is_null($events['events'])) {
 								];
 								
 							}
+							if($credit!="0")
+							{
+								if($text=="1")
+								{
+									// Build message to reply back
+									$messages = [
+										'type' => 'text',
+										'text' => "เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
+									];
+									
+									$sql = "UPDATE userstep SET step='11' WHERE uid='".$userid."'";
+																		
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
+									}
+									
+								}
+							}
 							
 						}
-						if($credit!="0")
+						else
 						{
-							if($text=="1")
-							{
-								// Build message to reply back
-								$messages = [
-									'type' => 'text',
-									'text' => "เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
-								];
-								
-								$sql = "UPDATE userstep SET step='11' WHERE uid='".$userid."'";
-																	
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								
-							}
+							$messages = [
+										'type' => 'text',
+										'text' => "ใช้งานได้เฉพาะกด 1 เท่านั้น"
+									];
+							
 						}
+						
 						
 					
 				}
