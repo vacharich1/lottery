@@ -131,13 +131,7 @@ if (!is_null($events['events'])) {
 							'text' => "ระบบได้ตั้งบัญชีธนาคารไว้เป็นของ กสิกรไทย\nเลือกบัญชีธนาคารอื่นๆ\nกด1 scb\nกด2 tmb\nกด3 เพื่อกำหนดจำนวนเงินที่ต้องการโอน\nกด0 กลับสููเมนูหลัก"
 							];
 						
-						$sql = "UPDATE userstep SET step='2' WHERE uid='".$userid."'";
-																
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
+					
 					}
 					else if($text=="5")
 					{
