@@ -281,11 +281,23 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}
+						sleep(0.5)
+						
+						$sql1 = "SELECT * FROM lottery WHERE uid='".$userid."' AND buy_book='book'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$lottery_show=$row["lottery"];
+								}
+							}
 						
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "กด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
+								'text' => "คุณซื้อหมายเลข ".$lottery_show."\nจำนวนเงิน ".$text."\nกด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
 						];
 					}
 					else
