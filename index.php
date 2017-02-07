@@ -311,7 +311,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "คุณซื้อ  ".$lottery_show."\nจำนวนเงิน ".$text."\nกด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
+								'text' => "คุณซื้อ  ".$lottery_show."\nจำนวน ".$text." บาท\nกด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
 						];
 					}
 					else
