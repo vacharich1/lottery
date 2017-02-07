@@ -328,8 +328,39 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="#")
 					{
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+										$price_buy_last=$row["usernotcon"];
+										$priceall=$row["usemoney"];
+								}
+							}
+						$newcredit=(int)$credit_cal-(int)$price_buy_last;
+						$useall=(int)$priceall+(int)$price_buy_last;
 						
+						$newcredit_str=(string)$newcredit;
+						$useall_str=(string)$useall;
 						
+						$sql = "UPDATE userstep SET credit='".$newcredit_str."' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$sql = "UPDATE userstep SET usemoney='".$useall_str."' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
 							
 						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																		
@@ -348,7 +379,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยืนยันการซื้อ เรียบร้อย"
+								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str
 							];
 					}
 					else if($text=="*")
