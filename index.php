@@ -188,7 +188,7 @@ if (!is_null($events['events'])) {
 						
 					
 				}
-				if($step=="11")
+				if($step=="11")#กรอกเลขเเทง
 				{
 					$count_text = strlen($text);
 					if($count_text==2)
@@ -197,7 +197,7 @@ if (!is_null($events['events'])) {
 						{
 								$messages = [
 								'type' => 'text',
-								'text' => "โปรดกรอกจำนวนเงิน"
+								'text' => "คุณมีเครดิต ".$credit." บาท\n\n โปรดกรอกจำนวนเงิน"
 							];
 							$sql = "UPDATE userstep SET step='111' WHERE uid='".$userid."'";
 																
@@ -206,6 +206,17 @@ if (!is_null($events['events'])) {
 							} else {
 									echo "Error updating record: " . $link->error;
 							}
+							$price="not";
+							$type="11";
+							$sql = "INSERT INTO lottery(id, uid, lottery, price, type, buy_book)
+										VALUES ('', '$userid', '$text', '$price', '$type', 'book')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
 						}
 						else
 						{
@@ -235,10 +246,39 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
-				if($step=="111")
+				if($step=="111")#กรอกจำนวนเงินเข้ามา
+				{
+					
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+								$messages = [
+								'type' => 'text',
+								'text' => "กด# เพื่อยืนยันการสั่งซื้อ\nกด* เพื่อยกเลิก"
+							];
+						
+						$sql = "UPDATE userstep SET step='1111' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$sql = "UPDATE lottery SET price='".$text."' WHERE uid='".$userid."' AND buy_book='book'";
+																
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+					}
+				}
+				if($step=="1111")#กรอกจำนวนเงินเข้ามา
 				{
 					
 				}
+				
 				
 	
 				// Make a POST Request to Messaging API to reply to sender
