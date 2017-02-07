@@ -193,7 +193,7 @@ if (!is_null($events['events'])) {
 								// Build message to reply back
 								$messages = [
 									'type' => 'text',
-									'text' => "คุณมีเครดิต ".$credit." บาท\n\n เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
+									'text' => "เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
 								];
 								
 								$sql = "UPDATE userstep SET step='11' WHERE uid='".$userid."'";
@@ -282,7 +282,7 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 						
-						$sql = "UPDATE member SET usernotcon='".$text."' WHERE uid='".$userid."'";
+						$sql = "UPDATE userstep SET usernotcon='".$text."' WHERE uid='".$userid."'";
 																
 						if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
