@@ -115,7 +115,7 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 					}
-					else if($step=="5")
+					else if($text=="5")
 					{
 							$messages = [
 								'type' => 'text',
@@ -123,7 +123,7 @@ if (!is_null($events['events'])) {
 							];
 						
 					}
-					else if($step=="4")
+					else if($text=="4")
 					{
 							$messages = [
 								'type' => 'text',
