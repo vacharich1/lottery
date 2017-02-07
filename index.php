@@ -120,7 +120,7 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
-				if($step=="1")#กด 1
+				else if($step=="1")#กด 1
 				{
 						$credit="0";
 						if($text=="0")#กด0 ย้อนเมนูหลัก
@@ -188,7 +188,7 @@ if (!is_null($events['events'])) {
 						
 					
 				}
-				if($step=="11")#กรอกเลขเเทง
+				else if($step=="11")#กรอกเลขเเทง
 				{
 					$count_text = strlen($text);
 					if($count_text==2)
@@ -246,7 +246,7 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
-				if($step=="111")#กรอกจำนวนเงินเข้ามา
+				else if($step=="111")#กรอกจำนวนเงินเข้ามา
 				{
 					
 					if(preg_match("/^[0-9]+$/", $text) == 1)
@@ -274,7 +274,7 @@ if (!is_null($events['events'])) {
 						
 					}
 				}
-				if($step=="1111")#กรอกจำนวนเงินเข้ามา
+				else if($step=="1111")#กรอกจำนวนเงินเข้ามา
 				{
 					if($text=="#")
 					{
@@ -309,6 +309,13 @@ if (!is_null($events['events'])) {
 						}
 					}
 					
+				}
+				else
+				{
+						$messages = [
+							'type' => 'text',
+							'text' => "กด 1 เเทงสองตัวบนเเละล่าง\nกด2 เเทงสองตัวบน\nกด3 เเทงสองตัวล่าง\nกด4 เเทงสามตัว\nกด0 กลับสููเมนูหลัก"
+						];
 				}
 				
 				
