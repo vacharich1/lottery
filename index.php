@@ -46,7 +46,7 @@ if (!is_null($events['events'])) {
 		if ($result->num_rows > 0) {
 		// output data of each row
 			while($row = $result->fetch_assoc()) {
-				if($event['source']['userId']==$row["uid"])
+				if($event['source']['userId']==$row["userid"])
 					{
 						$check_member="0";
 						$userid=$row["uid"];
