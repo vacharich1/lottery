@@ -276,6 +276,38 @@ if (!is_null($events['events'])) {
 				}
 				if($step=="1111")#กรอกจำนวนเงินเข้ามา
 				{
+					if($text=="#")
+					{
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						$sql = "UPDATE lottery SET buy_book='buy' WHERE uid='".$userid."' AND buy_book='book'";
+																
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยืนยันการซื้อ เรียบร้อย"
+							];
+					}
+					if($text=="*")
+					{
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+					}
 					
 				}
 				
