@@ -607,7 +607,7 @@ if (!is_null($events['events'])) {
 										'text' => $text33
 									];			
 						}
-						if($text=='*')
+						else if($text=='*')
 						{
 								$messages = [
 										'type' => 'text',
@@ -621,6 +621,14 @@ if (!is_null($events['events'])) {
 								} else {
 										echo "Error updating record: " . $link->error;
 								}
+							
+						}
+						else
+						{
+							$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
 							
 						}
 				}
