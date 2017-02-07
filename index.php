@@ -73,12 +73,14 @@ if (!is_null($events['events'])) {
 				$sql1 = "SELECT * FROM userstep";
 				$result = $link->query($sql1);
 				$check_member="1";		
+				$credit="0";
 				if ($result->num_rows > 0) {
 				// output data of each row
 					while($row = $result->fetch_assoc()) {
 							if($userid==$row["uid"])
 							{
 								$step=$row["step"];
+								$credit=$row["credit"];
 							}
 						}
 					}
@@ -118,10 +120,10 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
-				if($step=="1")
+				if($step=="1")#กด 1
 				{
 						$credit="0";
-						if($text=="0")
+						if($text=="0")#กด0 ย้อนเมนูหลัก
 						{
 							// Build message to reply back
 							$messages = [
@@ -170,7 +172,7 @@ if (!is_null($events['events'])) {
 								// Build message to reply back
 								$messages = [
 									'type' => 'text',
-									'text' => "คุณมีเครดิต ".$credit." บาท\nกรุณากรอกหมายเลข 2 ตัว"
+									'text' => "คุณมีเครดิต ".$credit." บาท\n\n เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
 								];
 								
 								$sql = "UPDATE userstep SET step='11' WHERE uid='".$userid."'";
@@ -219,7 +221,7 @@ if (!is_null($events['events'])) {
 						{
 								$messages = [
 								'type' => 'text',
-								'text' => "หมายเลขได้เเค่ 00-99เท่านั้น"
+								'text' => "หมายเลขอยู่ในเลขระหว่าง 00-99 เท่านั้น"
 							];
 						}
 						else
