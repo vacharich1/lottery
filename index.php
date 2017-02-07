@@ -86,18 +86,42 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="1")
 					{
-							$messages = [
-							'type' => 'text',
-							'text' => "กด 1 เเทงสองตัวบนเเละล่าง\nกด2 เเทงสองตัวบน\nกด3 เเทงสองตัวล่าง\nกด4 เเทงสามตัว\nกด0 กลับสููเมนูหลัก"
-						];
 						
-						$sql = "UPDATE userstep SET step='1' WHERE uid='".$userid."'";
-																
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
+							$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+							$result = $link->query($sql1);
+							$check_member="1";		
+							if ($result->num_rows > 0) {
+							// output data of each row
+								while($row = $result->fetch_assoc()) {
+
+											$credit=$row["credit"];
+									}
+								}	
+							
+							if($credit=="0")
+							{
+									$messages = [
+									'type' => 'text',
+									'text' => "คุณไม่มีเครดิต\nกรุณาเติมเงิน\nกด 2 เพิ่มเข้าใช้งานในส่วนนี้ \nขออภัยอย่างสูง"
+								];
+								
+							}
+							else
+							{
+							
+									$messages = [
+									'type' => 'text',
+									'text' => "กด 1 เเทงสองตัวบนเเละล่าง\nกด2 เเทงสองตัวบน\nกด3 เเทงสองตัวล่าง\nกด4 เเทงสามตัว\nกด0 กลับสููเมนูหลัก"
+								];
+								
+								$sql = "UPDATE userstep SET step='1' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							}
 					}
 					else if($text=="2")
 					{
