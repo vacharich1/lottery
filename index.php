@@ -297,7 +297,7 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}
-						sleep(0.5)
+						sleep(0.5);
 						
 						$sql1 = "SELECT * FROM lottery WHERE uid='".$userid."' AND buy_book='book'";
 						$result = $link->query($sql1);
