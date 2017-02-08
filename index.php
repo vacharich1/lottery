@@ -41,7 +41,7 @@ $events = json_decode($content, true);
 if (!is_null($events['events'])) {
 	// Loop through each event
 	foreach ($events['events'] as $event) {
-		
+		$type_lottery="00";
 		$sql1 = "SELECT * FROM member";
 		$result = $link->query($sql1);
 		$check_member="1";		
@@ -198,8 +198,28 @@ if (!is_null($events['events'])) {
 							}
 							
 						}
-						else if($text=="1")
+						else if($text=="1" || $text=="2" || $text=="3" || $text=="4")
 						{
+							if($text=="1")
+							{
+								$type_lottery="11";
+							}
+							if($text=="2" || $text=="3" || $text=="4")
+							{
+								$text="1";
+								if($text=="2")
+								{
+									$type_lottery="12";
+								}
+								else if($text=="3")
+								{
+									$type_lottery="13";
+								}
+								else
+								{
+									$type_lottery="14";
+								}
+							}
 							$sql1 = "SELECT * FROM userstep";
 							$result = $link->query($sql1);
 							$check_member="1";		
@@ -247,7 +267,7 @@ if (!is_null($events['events'])) {
 						{
 							$messages = [
 										'type' => 'text',
-										'text' => "ใช้งานได้เฉพาะกด 1 เท่านั้น"
+										'text' => "ใช้งานได้เฉพาะกด 0 - 4 ท่านั้น"
 									];
 							
 						}
@@ -274,7 +294,7 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							$price="not";
-							$type="11";
+							$type=$type_lottery;
 							$sql = "INSERT INTO lottery(id, uid, lottery, price, type, buy_book)
 										VALUES ('', '$userid', '$text', '$price', '$type', 'book')";
 													
