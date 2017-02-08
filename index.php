@@ -41,7 +41,7 @@ $events = json_decode($content, true);
 if (!is_null($events['events'])) {
 	// Loop through each event
 	foreach ($events['events'] as $event) {
-		$type_lottery="00";
+		
 		$sql1 = "SELECT * FROM member";
 		$result = $link->query($sql1);
 		$check_member="1";		
@@ -286,6 +286,14 @@ if (!is_null($events['events'])) {
 											echo "Error updating record: " . $link->error;
 									}
 									
+									$sql = "UPDATE userstep SET lotterytype='".$type_lottery."' WHERE uid='".$userid."'";
+																		
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
+									}
+									
 								}
 							}
 							
@@ -304,6 +312,16 @@ if (!is_null($events['events'])) {
 				}
 				else if($step=="11")#กรอกเลขเเทง
 				{
+					$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+					$result = $link->query($sql1);
+					$check_member="1";		
+					$credit="0";
+					if ($result->num_rows > 0) {
+					// output data of each row
+						while($row = $result->fetch_assoc()) {
+									$type_lottery=$row["lotterytype"];
+							}
+					}
 					$count_text = strlen($text);
 					if($type_lottery=="14")
 					{
@@ -329,9 +347,8 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							$price="not";
-							$type=$type_lottery;
 							$sql = "INSERT INTO lottery(id, uid, lottery, price, type, buy_book)
-										VALUES ('', '$userid', '$text', '$price', '$type', 'book')";
+										VALUES ('', '$userid', '$text', '$price', '$type_lottery', 'book')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
