@@ -64,7 +64,7 @@ if (!is_null($events['events'])) {
 				$text = $event['message']['text'];
 				// Get replyToken
 				$replyToken = $event['replyToken'];
-				if($text=="คำสั่ง")
+				if($text=="คำสั่ง" || $text=="0")
 				{
 					// Build message to reply back
 					$messages = [
@@ -325,7 +325,7 @@ if (!is_null($events['events'])) {
 						{
 							     $messages = [
 										'type' => 'text',
-										'text' => "คุณมีเครดิต  ".$credit_cal."\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+										'text' => "กรอกจำนวนเงินเกินเครดิต\n\nเครดิตของคุณคือ  ".$credit_cal."\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
 								];
 							
 							
@@ -448,7 +448,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n ต้องการดูเมนูพิม\n --> คำสั่ง"
+								'text' => "ยืนยันการซื้อ เรียบร้อย\nคุณมีเครดิตเหลือ ".$newcredit_str."\n\nกด 1 เเทงต่อ\nกด 0 กลับสู่เมนูหลัก"
 							];
 					}
 					else if($text=="*")
@@ -472,7 +472,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยกเลิก เรียบร้อย\nคุณมีเครดิตเหลือ ".$credit."\n ต้องการดูเมนูพิม\n --> คำสั่ง"
+								'text' => "ยกเลิก เรียบร้อย\nคุณมีเครดิตเหลือ ".$credit."\n\nกด 1 เเทงต่อ\nกด 0 กลับสู่เมนูหลัก"
 							];
 					}
 					else
