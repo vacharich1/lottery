@@ -1,7 +1,7 @@
 <?php
 $host= "sql6.freemysqlhosting.net";
 
-$db = "sql6156804";
+$db = "sql6157803";
 $CHAR_SET = "charset=utf8"; 
  
 #$username = "sql6156804";    
