@@ -322,6 +322,25 @@ if (!is_null($events['events'])) {
 									$type_lottery=$row["lotterytype"];
 							}
 					}
+					if($type_lottery=="11")
+					{
+						$type_change="เเทงหวย 2 ตัวบนเเละล่าง";
+					
+					}
+					else if($type_lottery=="12")
+					{
+						$type_change="เเทงหวย 2 ตัวบน";
+						
+					}
+					else if($type_lottery=="13")
+					{
+						$type_change="เเทงหวย 2 ตัวล่าง";
+					}
+					else
+					{
+						$type_change="เเทงหวย 3 ตัว";
+						
+					}
 					$count_text = strlen($text);
 					if($type_lottery=="14")
 					{
@@ -348,7 +367,7 @@ if (!is_null($events['events'])) {
 							}
 							$price="not";
 							$sql = "INSERT INTO lottery(id, uid, lottery, price, type, buy_book)
-										VALUES ('', '$userid', '$text', '$price', '$type_lottery', 'book')";
+										VALUES ('', '$userid', '$text', '$price', '$type_change', 'book')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
