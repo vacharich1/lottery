@@ -311,46 +311,68 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
 						
-						
-						$sql = "UPDATE userstep SET step='1111' WHERE uid='".$userid."'";
-																		
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
-						
-						$sql = "UPDATE userstep SET usernotcon='".$text."' WHERE uid='".$userid."'";
-																
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
-						
-						$sql = "UPDATE lottery SET price='".$text."' WHERE uid='".$userid."' AND buy_book='book'";
-																
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
-						sleep(0.5);
-						
-						$sql1 = "SELECT * FROM lottery WHERE uid='".$userid."' AND buy_book='book'";
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
 						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
 						if ($result->num_rows > 0) {
 						// output data of each row
 							while($row = $result->fetch_assoc()) {
-										$lottery_show=$row["lottery"];
+										$credit_cal=$row["credit"];
 								}
 							}
-						
-						
-						$messages = [
-								'type' => 'text',
-								'text' => "คุณซื้อ  ".$lottery_show."\nจำนวน ".$text." บาท\nกด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
-						];
+							
+						if((int)$text>(int)$credit_cal)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "คุณมีเครดิต  ".$credit_cal."\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
+						else
+						{
+								$sql = "UPDATE userstep SET step='1111' WHERE uid='".$userid."'";
+																				
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								$sql = "UPDATE userstep SET usernotcon='".$text."' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								$sql = "UPDATE lottery SET price='".$text."' WHERE uid='".$userid."' AND buy_book='book'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								sleep(0.5);
+								
+								$sql1 = "SELECT * FROM lottery WHERE uid='".$userid."' AND buy_book='book'";
+								$result = $link->query($sql1);
+								if ($result->num_rows > 0) {
+								// output data of each row
+									while($row = $result->fetch_assoc()) {
+												$lottery_show=$row["lottery"];
+										}
+									}
+								
+								
+								$messages = [
+										'type' => 'text',
+										'text' => "คุณซื้อ  ".$lottery_show."\nจำนวน ".$text." บาท\nกด# ยืนยันการซื้อ\nกด* เพื่อยกเลิก"
+								];
+						}
 					}
 					else
 					{
