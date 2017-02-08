@@ -246,7 +246,7 @@ if (!is_null($events['events'])) {
 							{
 								if($text=="1")
 								{
-									if($type_lottery="11")
+									if($type_lottery=="11")
 									{
 									// Build message to reply back
 										$messages = [
@@ -254,7 +254,7 @@ if (!is_null($events['events'])) {
 											'text' => "เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
 										];
 									}
-									else if($type_lottery="12")
+									else if($type_lottery=="12")
 									{
 										$messages = [
 											'type' => 'text',
@@ -262,7 +262,7 @@ if (!is_null($events['events'])) {
 										];
 										
 									}
-									else if($type_lottery="13")
+									else if($type_lottery=="13")
 									{
 										$messages = [
 											'type' => 'text',
