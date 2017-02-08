@@ -202,22 +202,22 @@ if (!is_null($events['events'])) {
 						{
 							if($text=="1")
 							{
-								$type_lottery="11";
+								$type_lottery="11";#เเทงสองตัวบนเเละล่าง
 							}
 							if($text=="2" || $text=="3" || $text=="4")
 							{
 								$text="1";
 								if($text=="2")
 								{
-									$type_lottery="12";
+									$type_lottery="12";#เเทงสองตัวบน
 								}
 								else if($text=="3")
 								{
-									$type_lottery="13";
+									$type_lottery="13";#เเทงสองตัวล่าง
 								}
 								else
 								{
-									$type_lottery="14";
+									$type_lottery="14";#เเทงสามตัว
 								}
 							}
 							$sql1 = "SELECT * FROM userstep";
@@ -278,7 +278,15 @@ if (!is_null($events['events'])) {
 				else if($step=="11")#กรอกเลขเเทง
 				{
 					$count_text = strlen($text);
-					if($count_text==2)
+					if($type_lottery=="14")
+					{
+						$count_check_lottery_len=3;
+					}
+					else
+					{
+						$count_check_lottery_len=2;
+					}
+					if($count_text==$count_check_lottery_len)
 					{
 						if(preg_match("/^[0-9]+$/", $text) == 1)
 						{
@@ -317,10 +325,21 @@ if (!is_null($events['events'])) {
 					{
 						if(preg_match("/^[0-9]+$/", $text) == 1)
 						{
+							if($type_lottery=="14")
+							{
 								$messages = [
 								'type' => 'text',
-								'text' => "หมายเลขอยู่ในเลขระหว่าง 00-99 เท่านั้น"
+								'text' => "หมายเลขอยู่ในเลขระหว่าง 0-999 เท่านั้น"
 							];
+							}
+							else
+							{
+								$messages = [
+								'type' => 'text',
+								'text' => "หมายเลขอยู่ในเลขระหว่าง 0-99 เท่านั้น"
+							];
+							}
+								
 						}
 						else
 						{
