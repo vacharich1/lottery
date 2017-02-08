@@ -356,7 +356,7 @@ if (!is_null($events['events'])) {
 							{
 								$messages = [
 								'type' => 'text',
-								'text' => "หมายเลขอยู่ในเลขระหว่าง 0-999 เท่านั้น"
+								'text' => "หมายเลขอยู่ในเลขระหว่าง 0-999 เท่านั้น".$type_lottery
 								];
 							}
 							else
