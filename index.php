@@ -211,11 +211,11 @@ if (!is_null($events['events'])) {
 								{
 									$type_lottery="12";#เเทงสองตัวบน
 								}
-								else if($text=="3")
+								if($text=="3")
 								{
 									$type_lottery="13";#เเทงสองตัวล่าง
 								}
-								else if($text=="4")
+								if($text=="4")
 								{
 									$type_lottery="14";#เเทงสามตัว
 								}
