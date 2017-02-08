@@ -206,7 +206,7 @@ if (!is_null($events['events'])) {
 							}
 							if($text=="2" || $text=="3" || $text=="4")
 							{
-								$text="1";
+								
 								if($text=="2")
 								{
 									$type_lottery="12";#เเทงสองตัวบน
@@ -219,6 +219,7 @@ if (!is_null($events['events'])) {
 								{
 									$type_lottery="14";#เเทงสามตัว
 								}
+								$text="1";
 							}
 							$sql1 = "SELECT * FROM userstep";
 							$result = $link->query($sql1);
@@ -245,11 +246,37 @@ if (!is_null($events['events'])) {
 							{
 								if($text=="1")
 								{
+									if($type_lottery="11")
+									{
 									// Build message to reply back
-									$messages = [
-										'type' => 'text',
-										'text' => "เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
-									];
+										$messages = [
+											'type' => 'text',
+											'text' => "เเทงหวย 2 ตัวบนเเละล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
+										];
+									}
+									else if($type_lottery="12")
+									{
+										$messages = [
+											'type' => 'text',
+											'text' => "เเทงหวย 2 ตัวบน\n\nกรุณากรอกหมายเลข 2 ตัว"
+										];
+										
+									}
+									else if($type_lottery="13")
+									{
+										$messages = [
+											'type' => 'text',
+											'text' => "เเทงหวย 2 ตัวล่าง\n\nกรุณากรอกหมายเลข 2 ตัว"
+										];
+									}
+									else
+									{
+										$messages = [
+											'type' => 'text',
+											'text' => "เเทงหวย 3 ตัว\n\nกรุณากรอกหมายเลข 2 ตัว"
+										];
+										
+									}
 									
 									$sql = "UPDATE userstep SET step='11' WHERE uid='".$userid."'";
 																		
