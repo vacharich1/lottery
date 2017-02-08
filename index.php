@@ -215,7 +215,7 @@ if (!is_null($events['events'])) {
 								{
 									$type_lottery="13";#เเทงสองตัวล่าง
 								}
-								else
+								else if($text=="4")
 								{
 									$type_lottery="14";#เเทงสามตัว
 								}
