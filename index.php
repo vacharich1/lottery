@@ -320,6 +320,7 @@ if (!is_null($events['events'])) {
 					// output data of each row
 						while($row = $result->fetch_assoc()) {
 									$type_lottery=$row["lotterytype"];
+									$credit=$row["credit"];
 							}
 					}
 					if($type_lottery=="11")
