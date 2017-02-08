@@ -368,7 +368,7 @@ if (!is_null($events['events'])) {
 							}
 							$price="not";
 							$sql = "INSERT INTO lottery(id, uid, lottery, price, type, buy_book)
-										VALUES ('', '$userid', '$text', '$price', '$type_change', 'book')";
+										VALUES ('', '$userid', '$text', '$price', '$type_lottery', 'book')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
