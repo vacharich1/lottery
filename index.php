@@ -331,6 +331,15 @@ if (!is_null($events['events'])) {
 							
 							
 						}
+						else if((int)$text<=0)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "จำนวนเงิน ต้องมากกว่า 0 บาท\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
 						else
 						{
 								$sql = "UPDATE userstep SET step='1111' WHERE uid='".$userid."'";
