@@ -131,8 +131,16 @@ if (!is_null($events['events'])) {
 						
 							$messages = [
 							'type' => 'text',
-							'text' => "ทีมงานของเราได้เลือกบัญชีธนาคารหลักไว้เป็นของ กสิกรไทย\nเลือกบัญชีธนาคารอื่นๆ\nกด1 scb\nกด2 tmb\nกด3 เพื่อกำหนดจำนวนเงินที่ต้องการโอน\nกด0 กลับสููเมนูหลัก\n\nระบบยังไม่สามารถใช้งานในส่วนนี้ได้"
+							'text' => "เลือกบัญชีธนาคารที่ต้องการโอน\n\nกด1 scb\nกด2 kbank\nกด0 กลับสููเมนูหลัก"
 							];
+							
+							$sql = "UPDATE userstep SET step='2' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
 						
 					
 					}
@@ -177,6 +185,26 @@ if (!is_null($events['events'])) {
 						
 					}
 					
+				}
+				else if($step=="2")#กด 1
+				{
+						if($text=="0")#กด0 ย้อนเมนูหลัก
+						{
+							// Build message to reply back
+							$messages = [
+								'type' => 'text',
+								'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
+							];
+							
+							$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+						}
 				}
 				else if($step=="1")#กด 1
 				{
