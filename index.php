@@ -330,7 +330,7 @@ if (!is_null($events['events'])) {
 										$bank=$row["bank"];
 										$money=$row["depositmoney"];
 								}
-						
+						}
 						$messages = [
 								'type' => 'text',
 								'text' => "เเจ้งการฝากเงินเรียบร้อยที่บัญชี".$bank."\nจำนวนเงิน".$money."\n\nรอการยืนยันเลขบัญชีทางข้อความได้เลย\n\nกด 1 เเทงต่อ\nกด 0 กลับสู่เมนูหลัก"
