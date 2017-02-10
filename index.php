@@ -195,6 +195,59 @@ if (!is_null($events['events'])) {
 							}
 							
 						}
+						else if($text=="1" || $text=="2")#กด0 ย้อนเมนูหลัก
+						{
+							$bankname="0";
+							if($text=="1")
+							{
+								$messages = [
+								'type' => 'text',
+								'text' => "คุณเลือกบัญชีโอนของธนาคาร scb\n\nโปรดกรอกจำนวนเงินที่ต้องการโอน"
+								];
+								
+								$bankname="scb";
+								
+							}
+							if($text=="2")
+							{
+								$messages = [
+								'type' => 'text',
+								'text' => "คุณเลือกบัญชีโอนของธนาคาร kbank\n\nโปรดกรอกจำนวนเงินที่ต้องการโอน"
+								];
+								
+								$bankname="kbank";
+							}
+							
+							$sql = "INSERT INTO bankdeposit(id, userid , bank, depositmoney, sucessornot, messagetouser)
+										VALUES ('', '$userid', '$bankname', 'aa', 'not')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
+										
+							// Build message to reply back
+							
+							
+							$sql = "UPDATE userstep SET step='21' WHERE uid='".$userid."'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+						}
+						else
+						{
+							$messages = [
+								'type' => 'text',
+								'text' => "เลือกบัญชีธนาคารที่ต้องการโอน\n\nกด1 scb\nกด2 kbank\nกด0 กลับสููเมนูหลัก"
+							];
+							
+						}
 						
 				}
 				else if($step=="1")#กด 1
