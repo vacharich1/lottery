@@ -210,7 +210,7 @@ if (!is_null($events['events'])) {
 						// output data of each row
 							while($row = $result->fetch_assoc()) {
 
-										$seven=$row["idcarduseseven"];
+										$seven_id=$row["idcarduseseven"];
 								}
 						}	
 						if($seven_id=="notid")
