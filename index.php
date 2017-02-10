@@ -261,7 +261,8 @@ if (!is_null($events['events'])) {
 									echo "Record updated successfully";
 							} else {
 									echo "Error updating record: " . $link->error;
-							}			
+							}	
+									
 										
 							$sql = "UPDATE userstep SET step='212' WHERE uid='".$userid."'";
 																
