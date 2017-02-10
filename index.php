@@ -152,10 +152,32 @@ if (!is_null($events['events'])) {
 					}
 					else if($text=="4")
 					{
+						
+							$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+							$result = $link->query($sql1);
+							$check_member="1";		
+							if ($result->num_rows > 0) {
+							// output data of each row
+								while($row = $result->fetch_assoc()) {
+
+											$credit=$row["credit"];
+									}
+								}	
+								
+							$sql = "UPDATE userstep SET step='4' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
 							$messages = [
-								'type' => 'text',
-								'text' => "ระบบยังไม่สามารถใช้งานในส่วนนี้ได้"
+							'type' => 'text',
+							'text' => "ยอดเงินของคุณ มี".$credit." บาท ต้องการถอนผ่านทาง\n\nกด 1 seven\nกด 2 บัญชี\nกด 3 bitcoin"
 							];
+							
+							
 						
 					}
 					else if($text=="0")
@@ -174,6 +196,45 @@ if (!is_null($events['events'])) {
 							];
 						
 					}
+					
+				}
+				else if($step=="4")#กด 1
+				{
+					if($text=="1")
+					{
+						$messages = [
+								'type' => 'text',
+								'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท กรอกหมายเลขบัตรประชาชน ของท่านเพื่อใช้ในการรับเงิน"
+							];
+						
+					}
+					else if($text=="2")
+					{
+						$messages = [
+								'type' => 'text',
+								'text' => "กรุณากรอก หมายเลขบัญชี"
+							];
+						
+					}
+					else if($text=="3")
+					{
+						$messages = [
+								'type' => 'text',
+								'text' => "bitcoin"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+								'type' => 'text',
+								'text' => "กด 1 seven\nกด 2 บัญชี\nกด 3 bitcoin"
+							];
+						
+					}
+					
+					
+					
 					
 				}
 				else if($step=="2")#กด 1
