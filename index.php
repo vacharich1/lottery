@@ -219,7 +219,7 @@ if (!is_null($events['events'])) {
 							}
 							
 							$sql = "INSERT INTO bankdeposit(id, uid , bank, depositmoney, sucessornot, messagetouser)
-										VALUES ('', '$userid', '$bankname', 'aa', 'not', 'not')";
+										VALUES ('', '$userid', '$bankname', 'book', 'book', 'book')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
@@ -255,7 +255,7 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
 							
-							$sql = "UPDATE bankdeposit SET credit='".$newcredit_str."' WHERE uid='".$userid."' AND sucessornot='not'";
+							$sql = "UPDATE bankdeposit SET credit='".$newcredit_str."' WHERE uid='".$userid."' AND sucessornot='book'";
 																
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -302,7 +302,7 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="#")
 					{
-						$sql = "UPDATE bankdeposit sucessornot='sucess' WHERE uid='".$userid."' AND sucessornot='not'";
+						$sql = "UPDATE bankdeposit sucessornot='sucess' WHERE uid='".$userid."' AND sucessornot='book'";
 																
 						if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
@@ -339,7 +339,7 @@ if (!is_null($events['events'])) {
 					}
 					else if($text=="*")
 					{
-						$sql = "DELETE * FROM bankdeposit WHERE uid='".$userid."' AND sucessornot='not'";
+						$sql = "DELETE * FROM bankdeposit WHERE uid='".$userid."' AND sucessornot='book'";
 						if ($link->query($sql) === TRUE) {
 							echo "Record deleted successfully";
 						} else {
