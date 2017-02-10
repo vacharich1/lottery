@@ -386,9 +386,17 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 						
+						$sql = "UPDATE userwithdrawinformation SET type='seven' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
 						$messages = [
 								'type' => 'text',
-								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n ยืนยันกด #\nเเก้ไขกด *"
+								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\nยืนยันกด #\nเเก้ไขกด *"
 							];
 					}
 					else
@@ -398,6 +406,91 @@ if (!is_null($events['events'])) {
 									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
 								];
 					}
+					
+				}
+				else if($step=="4111")#กรอก จำนวนเงินถอน
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+								}
+							}
+							
+						if((int)$text>(int)$credit_cal)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "กรอกจำนวนเงินเกินเครดิต\n\nเครดิตของคุณคือ  ".$credit_cal."\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
+						else if((int)$text<=0)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "จำนวนเงิน ต้องมากกว่า 0 บาท\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
+						else
+						{
+						
+							$sql = "UPDATE userstep SET step='41111' WHERE uid='".$userid."'";
+																			
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+							$result = $link->query($sql1);
+							$check_member="1";		
+							$credit="0";
+							if ($result->num_rows > 0) {
+							// output data of each row
+								while($row = $result->fetch_assoc()) {
+											$place=$row["type"];
+									}
+								}
+								
+								
+							$sql = "INSERT INTO userwithdrawtracsection(id, uid , type, money, transection, sentouser, changecredit)
+							VALUES ('', '$userid', '$place', '$text', 'not', 'not', 'not')";
+										
+							if (mysqli_query($link, $sql)) {
+										echo "New record created successfully";
+							} 
+							else {
+										echo "Error: " . $sql . "<br>" . mysqli_error($link);
+							}
+							
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "คุณถอนเงินจำนวน ".$text." โดยรับเงินที่ ".$place."\n\nยืนยันกด #\nยกเลิกกด *"
+							];
+						}
+					}
+					else
+					{
+							$messages = [
+								'type' => 'text',
+								'text' => "จำนวนเงินต้องเป็นตัวเลขเท่านั้น"
+							];
+						
+						
+					}
+					
 					
 				}
 				else if($step=="2")#กด 1
