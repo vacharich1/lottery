@@ -219,7 +219,7 @@ if (!is_null($events['events'])) {
 							}
 							
 							$sql = "INSERT INTO bankdeposit(id, userid , bank, depositmoney, sucessornot, messagetouser)
-										VALUES ('', '$userid', '$bankname', 'aa', 'not')";
+										VALUES ('', '$userid', '$bankname', 'aa', 'not', 'not)";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
@@ -309,6 +309,14 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}	
+						
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
 						
 						$sql1 = "SELECT * FROM bankdeposit WHERE uid='".$userid."'";
 						$result = $link->query($sql1);
