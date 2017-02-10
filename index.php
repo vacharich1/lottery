@@ -282,7 +282,7 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
 						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, idcarduseseven, bitcoinaccount)
-						VALUES ('', '$userid', 'not', 'not', '$text', 'not')";
+						VALUES ('', '$userid', 'not', '$text', 'not')";
 									
 						if (mysqli_query($link, $sql)) {
 									echo "New record created successfully";
@@ -315,6 +315,88 @@ if (!is_null($events['events'])) {
 									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
 								];
 						
+					}
+					
+				}
+				else if($step=="411")
+				{
+					if($text=="#")
+					{
+						
+						$sql = "UPDATE userstep SET step='4111' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "โปรกรอกจำนวนเงินที่ต้องการถอน"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+										
+						$sql = "UPDATE userstep SET step='4112' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "กรุณากรอกเลขประจำตัวบัตรประชาชน"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
+					
+					
+					
+				}
+				else if($step=="4112")
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$sql = "UPDATE userwithdrawinformation SET idcarduserseven='".$text."' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n ยืนยันกด #\nเเก้ไขกด *"
+							];
+					}
+					else
+					{
+						$messages = [
+									'type' => 'text',
+									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
+								];
 					}
 					
 				}
