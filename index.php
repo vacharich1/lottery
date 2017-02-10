@@ -215,11 +215,6 @@ if (!is_null($events['events'])) {
 						}	
 						if($seven!="notid")
 						{
-							$messages = [
-									'type' => 'text',
-									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท เลขบัตรประชาชนของท่านคือ".$seven."\n ยืนยันกด #\nเเก้ไขกด *"
-								];
-								
 							$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
 																		
 								if ($link->query($sql) === TRUE) {
@@ -227,14 +222,15 @@ if (!is_null($events['events'])) {
 								} else {
 										echo "Error updating record: " . $link->error;
 								}
+							$messages = [
+									'type' => 'text',
+									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท เลขบัตรประชาชนของท่านคือ".$seven."\n ยืนยันกด #\nเเก้ไขกด *"
+								];
+								
+							
 						}
 						else
 						{
-							$messages = [
-									'type' => 'text',
-									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท\n\nกรุณากรอกหมายเลขบัตรประชาชน ของท่านเพื่อใช้ในการรับเงิน"
-								];
-								
 							$sql = "UPDATE userstep SET step='412' WHERE uid='".$userid."'";
 																		
 								if ($link->query($sql) === TRUE) {
@@ -242,6 +238,13 @@ if (!is_null($events['events'])) {
 								} else {
 										echo "Error updating record: " . $link->error;
 								}
+								
+							$messages = [
+									'type' => 'text',
+									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท\n\nกรุณากรอกหมายเลขบัตรประชาชน ของท่านเพื่อใช้ในการรับเงิน"
+								];
+								
+							
 						}
 						
 					}
