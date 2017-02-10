@@ -202,7 +202,7 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="1")#ถอนเงิน seven
 					{
-						$seven_id="notid";
+						$seven_id="not";
 						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
 						$result = $link->query($sql1);
 						$check_member="1";		
@@ -213,7 +213,7 @@ if (!is_null($events['events'])) {
 										$seven_id=$row["idcarduseseven"];
 								}
 						}	
-						if($seven_id=="notid")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย seven
+						if($seven_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย seven
 						{
 							$sql = "UPDATE userstep SET step='412' WHERE uid='".$userid."'";
 																		
@@ -564,7 +564,7 @@ if (!is_null($events['events'])) {
 							echo "Error deleting record: " . $conn->error;
 						}
 										
-						$sql = "UPDATE userstep SET step='doneregister' WHERE uid='".$userid."'";
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
