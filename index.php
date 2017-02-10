@@ -202,7 +202,7 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="1")
 					{
-						$seven="notid";
+						$seven_id="notid";
 						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
 						$result = $link->query($sql1);
 						$check_member="1";		
@@ -213,23 +213,7 @@ if (!is_null($events['events'])) {
 										$seven=$row["idcarduseseven"];
 								}
 						}	
-						if($seven!="notid")
-						{
-							$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
-																		
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-							$messages = [
-									'type' => 'text',
-									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท เลขบัตรประชาชนของท่านคือ".$seven."\n ยืนยันกด #\nเเก้ไขกด *"
-								];
-								
-							
-						}
-						else
+						if($seven_id=="notid")
 						{
 							$sql = "UPDATE userstep SET step='412' WHERE uid='".$userid."'";
 																		
@@ -242,6 +226,23 @@ if (!is_null($events['events'])) {
 							$messages = [
 									'type' => 'text',
 									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท\n\nกรุณากรอกหมายเลขบัตรประชาชน ของท่านเพื่อใช้ในการรับเงิน"
+								];
+								
+							
+							
+						}
+						else
+						{
+							$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							$messages = [
+									'type' => 'text',
+									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท เลขบัตรประชาชนของท่านคือ".$seven."\n ยืนยันกด #\nเเก้ไขกด *"
 								];
 								
 							
