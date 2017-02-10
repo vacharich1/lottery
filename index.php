@@ -205,36 +205,7 @@ if (!is_null($events['events'])) {
 							}
 							
 						}
-						if($text=="1" || $text=="2")#กด0 ย้อนเมนูหลัก
-						{
-							if($text=="1")
-							{
-								$messages = [
-								'type' => 'text',
-								'text' => "คุณเลือกบัญชีโอนของธนาคาร scb\n\nโปรดกรอกจำนวนเงินที่ต้องการโอน"
-								];
-								
-							}
-							if($text=="2")
-							{
-								$messages = [
-								'type' => 'text',
-								'text' => "คุณเลือกบัญชีโอนของธนาคาร kbank\n\nโปรดกรอกจำนวนเงินที่ต้องการโอน"
-								];
-								
-							}
-							// Build message to reply back
-							
-							
-							$sql = "UPDATE userstep SET step='21' WHERE uid='".$userid."'";
-																
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
-							
-						}
+						
 				}
 				else if($step=="1")#กด 1
 				{
