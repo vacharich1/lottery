@@ -207,15 +207,12 @@ if (!is_null($events['events'])) {
 						}
 						if($text=="1" || $text=="2")#กด0 ย้อนเมนูหลัก
 						{
-							$bankname="0";
 							if($text=="1")
 							{
 								$messages = [
 								'type' => 'text',
 								'text' => "คุณเลือกบัญชีโอนของธนาคาร scb\n\nโปรดกรอกจำนวนเงินที่ต้องการโอน"
 								];
-								
-								$bankname="scb";
 								
 							}
 							if($text=="2")
@@ -225,19 +222,7 @@ if (!is_null($events['events'])) {
 								'text' => "คุณเลือกบัญชีโอนของธนาคาร kbank\n\nโปรดกรอกจำนวนเงินที่ต้องการโอน"
 								];
 								
-								$bankname="kbank";
 							}
-							
-							$sql = "INSERT INTO bankdeposit(id, userid , bank, depositmoney, sucessornot, messagetouser)
-										VALUES ('', '$userid', '$bankname', 'aa', 'not', 'not')";
-													
-										if (mysqli_query($link, $sql)) {
-													echo "New record created successfully";
-										} 
-										else {
-													echo "Error: " . $sql . "<br>" . mysqli_error($link);
-										}
-										
 							// Build message to reply back
 							
 							
@@ -381,118 +366,6 @@ if (!is_null($events['events'])) {
 						}
 						
 						
-					
-				}
-				else if($step=="212")#กรอกจำนวนเงินโอนธนาคาร
-				{
-					if($text=="#")
-					{
-						$sql = "UPDATE bankdeposit sucessornot='sucess' WHERE uid='".$userid."' AND sucessornot='not'";
-																
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}	
-						
-						$sql1 = "SELECT * FROM bankdeposit WHERE uid='".$userid."'";
-						$result = $link->query($sql1);
-						$check_member="1";		
-						$credit="0";
-						if ($result->num_rows > 0) {
-						// output data of each row
-							while($row = $result->fetch_assoc()) {
-										$bank=$row["bank"];
-										$money=$row["depositmoney"];
-								}
-						
-						$messages = [
-								'type' => 'text',
-								'text' => "เเจ้งการฝากเงินเรียบร้อยที่บัญชี".$bank."\nจำนวนเงิน".$money."\n\nรอการยืนยันเลขบัญชีทางข้อความได้เลย\n\nกด 1 เเทงต่อ\nกด 0 กลับสู่เมนูหลัก"
-							];
-						
-					}
-					else if($text=="*")
-					{
-						$sql = "DELETE FROM bankdeposit WHERE uid='".$userid."' AND sucessornot='not'";
-										
-										if ($link->query($sql) === TRUE) {
-											echo "Record deleted successfully";
-										} else {
-											echo "Error deleting record: " . $conn->error;
-										}
-										
-										
-						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
-																		
-						if ($link->query($sql) === TRUE) {
-								echo "Record updated successfully";
-						} else {
-								echo "Error updating record: " . $link->error;
-						}
-						
-						$messages = [
-								'type' => 'text',
-								'text' => "ยกเลิก เรียบร้อย\n\nกด 1 เเทงต่อ\nกด 0 กลับสู่เมนูหลัก"
-							];
-						
-					}
-					else
-					{
-						$messages = [
-										'type' => 'text',
-										'text' => "กรุณาพิม # หรือ * เท่านั้น"
-									];
-						
-					}
-					
-				}
-				else if($step=="21")#กรอกจำนวนเงินโอนธนาคาร
-				{
-					if(preg_match("/^[0-9]+$/", $text) == 1)
-					{
-							
-							$sql = "UPDATE bankdeposit depositmoney='".$text."' WHERE uid='".$userid."' AND sucessornot='not'";
-																
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}			
-										
-							$sql = "UPDATE userstep SET step='212' WHERE uid='".$userid."'";
-																
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
-							
-							$messages = [
-									'type' => 'text',
-									'text' => "กด * เพื่อยกเลิก\nกด # เพื่อยืนยันการฝากเงิน\n"
-								];
-					}
-					else
-					{
-						if((int)$text<=0)
-						{
-							     $messages = [
-										'type' => 'text',
-										'text' => "จำนวนเงิน ต้องมากกว่า 0 บาท\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
-								];
-							
-							
-						}
-						else
-						{
-							$messages = [
-									'type' => 'text',
-									'text' => "จำนวนเงินต้องเป็นตัวเลขเท่านั้น"
-								];
-						}
-					}
-					
 					
 				}
 				else if($step=="11")#กรอกเลขเเทง
