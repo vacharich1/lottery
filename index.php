@@ -339,13 +339,12 @@ if (!is_null($events['events'])) {
 					}
 					else if($text=="*")
 					{
-						$sql = "DELETE FROM bankdeposit WHERE uid='".$userid."' AND sucessornot='not'";
-										
-										if ($link->query($sql) === TRUE) {
-											echo "Record deleted successfully";
-										} else {
-											echo "Error deleting record: " . $conn->error;
-										}
+						$sql = "DELETE * FROM bankdeposit WHERE uid='".$userid."' AND sucessornot='not'";
+						if ($link->query($sql) === TRUE) {
+							echo "Record deleted successfully";
+						} else {
+							echo "Error deleting record: " . $conn->error;
+						}
 										
 										
 						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
