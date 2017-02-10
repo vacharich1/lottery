@@ -309,6 +309,16 @@ if (!is_null($events['events'])) {
 						} else {
 								echo "Error updating record: " . $link->error;
 						}	
+						sleep(0.3);
+						
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
 						
 						$sql1 = "SELECT * FROM bankdeposit WHERE uid='".$userid."'";
 						$result = $link->query($sql1);
