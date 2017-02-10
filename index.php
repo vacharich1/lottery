@@ -303,7 +303,7 @@ if (!is_null($events['events'])) {
 								
 						$messages = [
 								'type' => 'text',
-								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\nยืนยันกด #\nเเก้ไขกด *"
+								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
 							];
 							
 							
@@ -452,6 +452,9 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
+							$place="aaaaa";
+							sleep(0.3);
+							
 							$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
 							$result = $link->query($sql1);
 							$check_member="1";		
@@ -463,7 +466,7 @@ if (!is_null($events['events'])) {
 									}
 								}
 								
-								
+							sleep(0.2);	
 							$sql = "INSERT INTO userwithdrawtracsection(id, uid , type, money, transection, sentouser, changecredit)
 							VALUES ('', '$userid', '$place', '$text', 'not', 'not', 'not')";
 										
