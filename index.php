@@ -255,7 +255,7 @@ if (!is_null($events['events'])) {
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
 							
-							$sql = "UPDATE userstep SET credit='".$newcredit_str."' WHERE uid='".$userid."' AND sucessornot='not'";
+							$sql = "UPDATE bankdeposit SET credit='".$newcredit_str."' WHERE uid='".$userid."' AND sucessornot='not'";
 																
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
