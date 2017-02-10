@@ -378,7 +378,7 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 						
-						$sql = "UPDATE userwithdrawinformation SET idcarduserseven='".$text."' WHERE uid='".$userid."'";
+						$sql = "UPDATE userwithdrawinformation SET idcarduseseven='".$text."' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
