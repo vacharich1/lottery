@@ -202,10 +202,47 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="1")
 					{
-						$messages = [
-								'type' => 'text',
-								'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท กรอกหมายเลขบัตรประชาชน ของท่านเพื่อใช้ในการรับเงิน"
-							];
+						$seven="notid";
+						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+
+										$seven=$row["idcarduseseven"];
+								}
+						}	
+						if($seven!="notid")
+						{
+							$messages = [
+									'type' => 'text',
+									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท เลขบัตรประชาชนของท่านคือ".$seven."\n ยืนยันกด #\nเเก้ไขกด *"
+								];
+								
+							$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+						}
+						else
+						{
+							$messages = [
+									'type' => 'text',
+									'text' => "ท่านสามารถรับเงินผ่าน seven ได้ทุกสาขา อาจมีค่าธรรมเนียม 30 บาท กรอกหมายเลขบัตรประชาชน ของท่านเพื่อใช้ในการรับเงิน"
+								];
+								
+							$sql = "UPDATE userstep SET step='412' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+						}
 						
 					}
 					else if($text=="2")
@@ -241,6 +278,47 @@ if (!is_null($events['events'])) {
 								echo "Error updating record: " . $link->error;
 						}
 					
+					
+				}
+				else if($step=="412")
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, idcarduseseven, bitcoinaccount)
+						VALUES ('', '$userid', 'not', 'not', '$text', 'not')";
+									
+						if (mysqli_query($link, $sql)) {
+									echo "New record created successfully";
+						} 
+						else {
+									echo "Error: " . $sql . "<br>" . mysqli_error($link);
+						}
+						
+						
+						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								
+						$messages = [
+								'type' => 'text',
+								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n ยืนยันกด #\nเเก้ไขกด *"
+							];
+							
+							
+					}
+					else
+					{
+						$messages = [
+									'type' => 'text',
+									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
+								];
+						
+					}
 					
 				}
 				else if($step=="2")#กด 1
