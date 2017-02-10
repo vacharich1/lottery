@@ -218,7 +218,7 @@ if (!is_null($events['events'])) {
 								$bankname="kbank";
 							}
 							
-							$sql = "INSERT INTO bankdeposit(id, userid , bank, depositmoney, sucessornot, messagetouser)
+							$sql = "INSERT INTO bankdeposit(id, uid , bank, depositmoney, sucessornot, messagetouser)
 										VALUES ('', '$userid', '$bankname', 'aa', 'not', 'not')";
 													
 										if (mysqli_query($link, $sql)) {
