@@ -250,6 +250,54 @@ if (!is_null($events['events'])) {
 						}
 						
 				}
+				else if($step=="21")#กรอกจำนวนเงินโอนธนาคาร
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+							
+							$sql = "UPDATE bankdeposit depositmoney='".$text."' WHERE uid='".$userid."' AND sucessornot='not'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}			
+										
+							$sql = "UPDATE userstep SET step='212' WHERE uid='".$userid."'";
+																
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "กด * เพื่อยกเลิก\nกด # เพื่อยืนยันการฝากเงิน\n"
+								];
+					}
+					else
+					{
+						if((int)$text<=0)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "จำนวนเงิน ต้องมากกว่า 0 บาท\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
+						else
+						{
+							$messages = [
+									'type' => 'text',
+									'text' => "จำนวนเงินต้องเป็นตัวเลขเท่านั้น"
+								];
+						}
+					}
+					
+					
+				}
 				else if($step=="1")#กด 1
 				{
 						$credit="0";
