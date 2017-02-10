@@ -467,7 +467,7 @@ if (!is_null($events['events'])) {
 								}
 								
 							sleep(0.2);	
-							$sql = "INSERT INTO userwithdrawtracsection(id, uid , type, money, transection, sentouser, changecredit)
+							$sql = "INSERT INTO userwithdrawtracsection(id, uid , type, money, transection, sendtouser, changecredit)
 							VALUES ('', '$userid', '$place', '$text', 'not', 'not', 'not')";
 										
 							if (mysqli_query($link, $sql)) {
@@ -493,6 +493,68 @@ if (!is_null($events['events'])) {
 						
 						
 					}
+					
+					
+				}
+				else if($step=="41111")
+				{
+					if($text=="#")
+					{
+						
+						$sql = "UPDATE userstep SET step='doneregister' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$sql = "UPDATE userwithdrawtracsection SET transection='process' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ระบบกำลังดำเนินการ ใช้เวลา ไม่เกิน 3 ชั่วโมง\n\nกด0 กลับสููเมนูหลัก"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+						$sql = "DELETE FROM userwithdrawtracsection WHERE uid='".$userid."' AND transection='not'";
+						if ($link->query($sql) === TRUE) {
+							echo "Record deleted successfully";
+						} else {
+							echo "Error deleting record: " . $conn->error;
+						}
+										
+						$sql = "UPDATE userstep SET step='doneregister' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยกเลิกเรียบร้อย\n\nกด0 กลับสููเมนูหลัก"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
+					
 					
 					
 				}
