@@ -938,8 +938,7 @@ if (!is_null($events['events'])) {
 					{
 						$user_id="not";
 						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
-						$result = $link->query($sql1);
-						$check_member="1";		
+						$result = $link->query($sql1);	
 						if ($result->num_rows > 0) {
 						// output data of each row
 							while($row = $result->fetch_assoc()) {
@@ -947,6 +946,8 @@ if (!is_null($events['events'])) {
 										$user_id=$row["uid"];
 								}
 						}	
+						
+						
 						if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
 						{
 							$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount, type)
@@ -970,20 +971,18 @@ if (!is_null($events['events'])) {
 						}
 						
 						
-						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
-																		
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
+						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";									
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
 								
 								
 						$messages = [
 								'type' => 'text',
 								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
 							];
-							
 							
 					}
 					else
