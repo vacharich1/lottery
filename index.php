@@ -585,7 +585,7 @@ if (!is_null($events['events'])) {
 								}
 						}
 						
-						$sql = "UPDATE userstep SET step='4222' WHERE uid='".$userid."'";
+						$sql = "UPDATE userstep SET step='4222222' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
