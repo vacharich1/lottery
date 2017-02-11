@@ -511,10 +511,124 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
+				else if($step=="42222")#ยืนยันชื่อธนาคาร
+				{
+					$user_id="not";
+					$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+					$result = $link->query($sql1);
+					$check_member="1";		
+					if ($result->num_rows > 0) {
+					// output data of each row
+						while($row = $result->fetch_assoc()) {
+	
+									$user_id=$row["uid"];
+							}
+					}	
+					if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
+					{
+						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
+						VALUES ('', '$userid', 'not', '$text', 'not', 'not', 'not')";
+									
+						if (mysqli_query($link, $sql)) {
+									echo "New record created successfully";
+						} 
+						else {
+									echo "Error: " . $sql . "<br>" . mysqli_error($link);
+						}
+						
+								
+						$messages = [
+								'type' => 'text',
+								'text' => "ธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
+							];
+					}
+					else
+					{
+						
+						$sql = "UPDATE userwithdrawinformation SET nameandbranchbank='".$text."' WHERE uid='".$userid."'";									
+						if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
+							];
+					}
+					
+					$sql = "UPDATE userstep SET step='422221' WHERE uid='".$userid."'";
+																	
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+					
+				}
+				else if($step=="422221")#ยืนยันชื่อธนาคาร
+				{
+					if($text=="#")
+					{
+						
+						$sql = "UPDATE userstep SET step='4222222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยืนยันบัญชีเรียบร้อย"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+										
+						$sql = "UPDATE userstep SET step='42222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "กรุณากรอก ชื่อธนาคารเเละสาขา"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
+					
+				}
 				else if($step=="4221")#ยืนยันบัญชี
 				{
 					if($text=="#")
 					{
+						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$bank1=$row["bankaccount"];
+										$bank2=$row["account_owner"];
+										$bank3=$row["nameandbranckbank"];
+								}
+						}
 						
 						$sql = "UPDATE userstep SET step='4222' WHERE uid='".$userid."'";
 																		
@@ -526,7 +640,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยืนยันบัญชีเรียบร้อย กรุณากรอกชื่อเจ้าของบัญชี"
+								'text' => "ยืนยันบัญชีเรียบร้อย กรุณากรอกชื่อเจ้าของบัญชี\n\nเลขที่บัญชีคือ ".$bank1."\nชื่อบัญชีคือ ".$bank2."\nข้อมูลธนาคาร ".$bank3."\n\nกรุณากรอกจำนวนเงินที่ต้องการถอน"
 							];
 						
 					}
