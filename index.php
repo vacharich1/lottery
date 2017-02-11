@@ -374,6 +374,47 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
+				else if($step=="41333")#ถอนเงิน seven ไม่มีประวิตื
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount, type)
+						VALUES ('', '$userid', 'not', 'not', 'not', '$text', 'not', 'seven')";
+									
+						if (mysqli_query($link, $sql)) {
+									echo "New record created successfully";
+						} 
+						else {
+									echo "Error: " . $sql . "<br>" . mysqli_error($link);
+						}
+						
+						
+						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+								
+						$messages = [
+								'type' => 'text',
+								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
+							];
+							
+							
+					}
+					else
+					{
+						$messages = [
+									'type' => 'text',
+									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
+								];
+						
+					}
+					
+				}
 				else if($step=="422")#ถอนเงิน บัญชีธนาคาร
 				{
 					if(preg_match("/^[0-9]+$/", $text) == 1)
@@ -391,8 +432,8 @@ if (!is_null($events['events'])) {
 						}	
 						if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
 						{
-							$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
-							VALUES ('', '$userid', '$text', 'not', 'not', 'not', 'not')";
+							$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount, type)
+							VALUES ('', '$userid', '$text', 'not', 'not', 'not', 'not', 'bank')";
 										
 							if (mysqli_query($link, $sql)) {
 										echo "New record created successfully";
@@ -651,8 +692,8 @@ if (!is_null($events['events'])) {
 					}	
 					if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
 					{
-						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
-						VALUES ('', '$userid', 'not', 'not', '$text', 'not', 'not')";
+						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount, type)
+						VALUES ('', '$userid', 'not', 'not', '$text', 'not', 'not', 'bank')";
 									
 						if (mysqli_query($link, $sql)) {
 									echo "New record created successfully";
@@ -765,8 +806,8 @@ if (!is_null($events['events'])) {
 					}	
 					if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
 					{
-						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
-						VALUES ('', '$userid', 'not', '$text', 'not', 'not', 'not')";
+						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount, type)
+						VALUES ('', '$userid', 'not', '$text', 'not', 'not', 'not', 'not')";
 									
 						if (mysqli_query($link, $sql)) {
 									echo "New record created successfully";
@@ -928,47 +969,6 @@ if (!is_null($events['events'])) {
 										'type' => 'text',
 										'text' => "กรุณาพิม # หรือ * เท่านั้น"
 									];
-						
-					}
-					
-				}
-				else if($step == '41333')#ถอนเงิน seven ไม่มีประวิตื
-				{
-					if(preg_match("/^[0-9]+$/", $text) == 1)
-					{
-						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
-						VALUES ('', '$userid', 'not', 'not', 'not', '$text', 'not')";
-									
-						if (mysqli_query($link, $sql)) {
-									echo "New record created successfully";
-						} 
-						else {
-									echo "Error: " . $sql . "<br>" . mysqli_error($link);
-						}
-						
-						
-						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
-																		
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								
-								
-						$messages = [
-								'type' => 'text',
-								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
-							];
-							
-							
-					}
-					else
-					{
-						$messages = [
-									'type' => 'text',
-									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
-								];
 						
 					}
 					
