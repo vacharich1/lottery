@@ -318,7 +318,7 @@ if (!is_null($events['events'])) {
 					
 					
 				}
-				else if($step=="422")#ถอนเงิน seven ไม่มีประวิตื
+				else if($step=="422")#ถอนเงิน บัญชีธนาคาร
 				{
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
@@ -375,6 +375,14 @@ if (!is_null($events['events'])) {
 									'text' => "บัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
 								];
 						}
+						
+						$sql = "UPDATE userstep SET step='4221' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
 					}
 					else
 					{
@@ -387,6 +395,52 @@ if (!is_null($events['events'])) {
 						
 					}
 					
+					
+				}
+				else if($step=="4221")#ยืนยันบัญชี
+				{
+					if($text=="#")
+					{
+						
+						$sql = "UPDATE userstep SET step='4222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยืนยันบัญชีเรียบร้อย กรุณากรอกชื่อบัญชี"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+										
+						$sql = "UPDATE userstep SET step='422' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "กรุณากรอก หมายเลขบัญชี"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
 					
 				}
 				else if($step=="412")#ถอนเงิน seven ไม่มีประวิตื
