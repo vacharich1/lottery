@@ -215,7 +215,7 @@ if (!is_null($events['events'])) {
 						}	
 						if($seven_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย seven
 						{
-							$sql = "UPDATE userstep SET step='412' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep SET step='41333' WHERE uid='".$userid."'";
 																		
 								if ($link->query($sql) === TRUE) {
 										echo "Record updated successfully";
@@ -932,7 +932,7 @@ if (!is_null($events['events'])) {
 					}
 					
 				}
-				else if($step=="412")#ถอนเงิน seven ไม่มีประวิตื
+				else if($step=="41333")#ถอนเงิน seven ไม่มีประวิตื
 				{
 					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
