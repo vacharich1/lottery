@@ -999,7 +999,17 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="#")
 					{
-						
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+								}
+							}
+							
 						$sql = "UPDATE userstep SET step='4111' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
@@ -1010,7 +1020,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "โปรกรอกจำนวนเงินที่ต้องการถอน"
+								'text' => "คุณมีเครดิต ".$credit_cal."\n\nโปรกรอกจำนวนเงินที่ต้องการถอน"
 							];
 						
 					}
