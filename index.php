@@ -397,6 +397,94 @@ if (!is_null($events['events'])) {
 					
 					
 				}
+				else if($step=="4222222")
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+								}
+							}
+							
+						if((int)$text>(int)$credit_cal)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "กรอกจำนวนเงินเกินเครดิต\n\nเครดิตของคุณคือ  ".$credit_cal."\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
+						else if((int)$text<=0)
+						{
+							     $messages = [
+										'type' => 'text',
+										'text' => "จำนวนเงิน ต้องมากกว่า 0 บาท\n\nโปรดกรอกจำนวนเงินใหม่อีกครั้ง"
+								];
+							
+							
+						}
+						else
+						{
+							
+							$sql = "UPDATE userstep SET step='4222223' WHERE uid='".$userid."'";
+																			
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							$place="aaaaa";
+							sleep(0.3);
+							
+							$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+							$result = $link->query($sql1);
+							$check_member="1";		
+							$credit="0";
+							if ($result->num_rows > 0) {
+							// output data of each row
+								while($row = $result->fetch_assoc()) {
+											$place=$row["type"];
+									}
+								}
+								
+							sleep(0.2);	
+							$sql = "INSERT INTO userwithdrawtracsection(id, uid , type, money, transection, sendtouser, changecredit)
+							VALUES ('', '$userid', '$place', '$text', 'not', 'not', 'not')";
+										
+							if (mysqli_query($link, $sql)) {
+										echo "New record created successfully";
+							} 
+							else {
+										echo "Error: " . $sql . "<br>" . mysqli_error($link);
+							}
+							
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "คุณถอนเงินจำนวน ".$text." โดยรับเงินที่ ".$place."\n\nยืนยันกด #\nยกเลิกกด *"
+							];
+						}
+					}
+					else
+					{
+							$messages = [
+								'type' => 'text',
+								'text' => "จำนวนเงินต้องเป็นตัวเลขเท่านั้น"
+							];
+						
+						
+					}	
+					
+					
+				}
 				else if($step=="4222")#ชื่อเจ้าของบัญชี
 				{
 					$user_id="not";
@@ -581,11 +669,21 @@ if (!is_null($events['events'])) {
 							while($row = $result->fetch_assoc()) {
 										$bank1=$row["bankaccount"];
 										$bank2=$row["account_owner"];
-										$bank3=$row["nameandbranckbank"];
+										$bank3=$row["nameandbranchbank"];
 								}
 						}
 						
+						$type=$bank1."  ".$bank2."  ".$bank3;
+						
 						$sql = "UPDATE userstep SET step='4222222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$sql = "UPDATE userwithdrawinformation SET type='".$type."' WHERE uid='".$userid."'";
 																		
 						if ($link->query($sql) === TRUE) {
 								echo "Record updated successfully";
