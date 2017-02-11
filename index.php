@@ -541,7 +541,7 @@ if (!is_null($events['events'])) {
 					
 					
 				}
-				else if($step="4222223")
+				else if($step=="4222223")
 				{
 					if($text=="#")
 					{
