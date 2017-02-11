@@ -399,80 +399,68 @@ if (!is_null($events['events'])) {
 				}
 				else if($step=="4222")#ชื่อเจ้าของบัญชี
 				{
-					if(preg_match("/^[0-9]+$/", $text) == 1)
-					{
-						$user_id="not";
-						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
-						$result = $link->query($sql1);
-						$check_member="1";		
-						if ($result->num_rows > 0) {
-						// output data of each row
-							while($row = $result->fetch_assoc()) {
-
-										$user_id=$row["uid"];
-								}
-						}	
-						if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
-						{
-							$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
-							VALUES ('', '$userid', 'not', '$text', 'not', 'not', 'not')";
-										
-							if (mysqli_query($link, $sql)) {
-										echo "New record created successfully";
-							} 
-							else {
-										echo "Error: " . $sql . "<br>" . mysqli_error($link);
+					$user_id="not";
+					$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+					$result = $link->query($sql1);
+					$check_member="1";		
+					if ($result->num_rows > 0) {
+					// output data of each row
+						while($row = $result->fetch_assoc()) {
+	
+									$user_id=$row["uid"];
 							}
-							
-							
-							$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
-																			
-									if ($link->query($sql) === TRUE) {
-											echo "Record updated successfully";
-									} else {
-											echo "Error updating record: " . $link->error;
-									}
+					}	
+					if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
+					{
+						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
+						VALUES ('', '$userid', 'not', '$text', 'not', 'not', 'not')";
 									
-									
-							$messages = [
-									'type' => 'text',
-									'text' => "ชื่อเจ้าของบัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
-								];
-						}
-						else
-						{
-							
-							$sql = "UPDATE userwithdrawinformation SET nameandbranchbank='".$text."' WHERE uid='".$userid."'";									
-							if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-							
-							$messages = [
-									'type' => 'text',
-									'text' => "ชื่อเจ้าของบัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
-								];
+						if (mysqli_query($link, $sql)) {
+									echo "New record created successfully";
+						} 
+						else {
+									echo "Error: " . $sql . "<br>" . mysqli_error($link);
 						}
 						
-						$sql = "UPDATE userstep SET step='42221' WHERE uid='".$userid."'";
+						
+						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
 																		
 								if ($link->query($sql) === TRUE) {
 										echo "Record updated successfully";
 								} else {
 										echo "Error updating record: " . $link->error;
 								}
-					}
-					else
-					{
+								
 								
 						$messages = [
 								'type' => 'text',
-								'text' => "บัญชีธนาคารต้องเป็นตัวเลขเท่านั้น"
+								'text' => "ชื่อเจ้าของบัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
 							];
-						
-						
 					}
+					else
+					{
+						
+						$sql = "UPDATE userwithdrawinformation SET nameandbranchbank='".$text."' WHERE uid='".$userid."'";									
+						if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ชื่อเจ้าของบัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
+							];
+					}
+					
+					$sql = "UPDATE userstep SET step='42221' WHERE uid='".$userid."'";
+																	
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+				}
 					
 					
 					
