@@ -302,7 +302,7 @@ if (!is_null($events['events'])) {
 					{
 						$messages = [
 								'type' => 'text',
-								'text' => "bitcoin ส่วนนี้ยังไม่เปิดให้บริการ"
+								'text' => "bitcoin coming soon...."
 							];
 						
 					}
