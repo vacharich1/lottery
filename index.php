@@ -958,6 +958,7 @@ if (!is_null($events['events'])) {
 							else {
 										echo "Error: " . $sql . "<br>" . mysqli_error($link);
 							}
+						}
 						else
 						{
 							$sql = "UPDATE userwithdrawinformation SET idcarduseseven='".$text."' WHERE uid='".$userid."'";									
@@ -966,6 +967,8 @@ if (!is_null($events['events'])) {
 								} else {
 										echo "Error updating record: " . $link->error;
 								}
+							
+						
 						}
 						
 						
