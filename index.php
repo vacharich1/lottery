@@ -318,6 +318,62 @@ if (!is_null($events['events'])) {
 					
 					
 				}
+				else if($step=="421")
+				{
+					if($text=="#")
+					{
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+								}
+							}
+							
+						$sql = "UPDATE userstep SET step='4222222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "เครดิตของคุณคือ ".$credit_cal."\n\nกรุณากรอกจำนวนเงินที่ต้องการถอน"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+										
+						$sql = "UPDATE userstep SET step='422' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "กรุณากรอกเลขบัญชีธนาคาร"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
+					
+				}
 				else if($step=="422")#ถอนเงิน บัญชีธนาคาร
 				{
 					if(preg_match("/^[0-9]+$/", $text) == 1)
@@ -754,6 +810,16 @@ if (!is_null($events['events'])) {
 				{
 					if($text=="#")
 					{
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+								}
+							}
 						
 						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
 						$result = $link->query($sql1);
@@ -788,7 +854,7 @@ if (!is_null($events['events'])) {
 						
 						$messages = [
 								'type' => 'text',
-								'text' => "ยืนยันบัญชีเรียบร้อย กรุณากรอกชื่อเจ้าของบัญชี\n\nเลขที่บัญชีคือ ".$bank1."\nชื่อบัญชีคือ ".$bank2."\nข้อมูลธนาคาร ".$bank3."\n\nกรุณากรอกจำนวนเงินที่ต้องการถอน"
+								'text' => "ยืนยันบัญชีเรียบร้อย กรุณากรอกชื่อเจ้าของบัญชี\n\nเลขที่บัญชีคือ ".$bank1."\nชื่อบัญชีคือ ".$bank2."\nข้อมูลธนาคาร ".$bank3."\n\nเครดิตของคุณคือ".$credit_cal."\n\nกรุณากรอกจำนวนเงินที่ต้องการถอน"
 							];
 						
 						
