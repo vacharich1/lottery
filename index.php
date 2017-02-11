@@ -460,7 +460,7 @@ if (!is_null($events['events'])) {
 							} else {
 									echo "Error updating record: " . $link->error;
 							}
-				}
+				
 					
 					
 					
