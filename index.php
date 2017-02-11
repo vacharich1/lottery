@@ -363,12 +363,12 @@ if (!is_null($events['events'])) {
 						else
 						{
 							
-							$sql = "UPDATE userwithdrawinformation SET bankaccount='".$text." WHERE uid='".$userid."'";									
+							$sql = "UPDATE userwithdrawinformation SET bankaccount='".$text."' WHERE uid='".$userid."'";									
 							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
 							
 							$messages = [
 									'type' => 'text',
