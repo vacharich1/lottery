@@ -926,7 +926,7 @@ if (!is_null($events['events'])) {
 					{
 						$messages = [
 										'type' => 'text',
-										'text' => "กรุณาพิม # หรือ * เท่านั้น111111"
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
 									];
 						
 					}
@@ -934,10 +934,66 @@ if (!is_null($events['events'])) {
 				}
 				else if($step=="412")#ถอนเงิน seven ไม่มีประวิตื
 				{
-					$messages = [
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$user_id="not";
+						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+						$result = $link->query($sql1);	
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+		
+										$user_id=$row["uid"];
+								}
+						}	
+						
+						
+						if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
+						{
+							$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount, type)
+							VALUES ('', '$userid', 'not', 'not', 'not', '$text', 'not', 'seven')";
+										
+							if (mysqli_query($link, $sql)) {
+										echo "New record created successfully";
+							} 
+							else {
+										echo "Error: " . $sql . "<br>" . mysqli_error($link);
+							}
+						}
+						else
+						{
+							$sql = "UPDATE userwithdrawinformation SET idcarduseseven='".$text."' WHERE uid='".$userid."'";									
+							if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+						}
+						
+						
+						$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";									
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+								
+								
+						$messages = [
 								'type' => 'text',
-								'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
+								'text' => "เลขบัตรประชาชนของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
 							];
+							
+					}
+					else
+					{
+						$messages = [
+									'type' => 'text',
+									'text' => "เลขบัตรประชาชนต้องเป็นตัวเลขเท่านั้น"
+								];
+						
+					}
+					
 				}
 				else if($step=="411")#ถอนเงิน seven มีประวัติ
 				{
@@ -979,7 +1035,7 @@ if (!is_null($events['events'])) {
 					{
 						$messages = [
 										'type' => 'text',
-										'text' => "กรุณาพิม # หรือ * เท่านั้น222222"
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
 									];
 						
 					}
@@ -1203,7 +1259,7 @@ if (!is_null($events['events'])) {
 					{
 						$messages = [
 										'type' => 'text',
-										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+										'text' => "กรุณาพิม # หรือ * เท่านั้น 33333"
 									];
 						
 					}
