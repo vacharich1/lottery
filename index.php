@@ -413,7 +413,7 @@ if (!is_null($events['events'])) {
 					if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
 					{
 						$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, nameandbranchbank, account_owner, idcarduseseven, bitcoinaccount)
-						VALUES ('', '$userid', 'not', '$text', 'not', 'not', 'not')";
+						VALUES ('', '$userid', 'not', 'not', '$text', 'not', 'not')";
 									
 						if (mysqli_query($link, $sql)) {
 									echo "New record created successfully";
@@ -440,7 +440,7 @@ if (!is_null($events['events'])) {
 					else
 					{
 						
-						$sql = "UPDATE userwithdrawinformation SET nameandbranchbank='".$text."' WHERE uid='".$userid."'";									
+						$sql = "UPDATE userwithdrawinformation SET account_owner='".$text."' WHERE uid='".$userid."'";									
 						if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
 							} else {
@@ -463,6 +463,52 @@ if (!is_null($events['events'])) {
 				
 					
 					
+					
+				}
+				else if($step=="42221")#ยืนยันชื่อเจ้าของบัญชี
+				{
+					if($text=="#")
+					{
+						
+						$sql = "UPDATE userstep SET step='42222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยืนยันชื่อเจ้าของบัญชีเรียบร้อย\n\nกรุณากรอกชื่อธนาคารเเละสาขา"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+										
+						$sql = "UPDATE userstep SET step='4222' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "กรุณากรอกชื่อเจ้าของบัญชี"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
 					
 				}
 				else if($step=="4221")#ยืนยันบัญชี
