@@ -251,10 +251,51 @@ if (!is_null($events['events'])) {
 					}
 					else if($text=="2")
 					{
-						$messages = [
-								'type' => 'text',
-								'text' => "กรุณากรอก หมายเลขบัญชี"
-							];
+						$bank_id="not";
+						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+
+										$bank_id=$row["bankaccount"];
+								}
+						}	
+						if($bank_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
+						{
+							$sql = "UPDATE userstep SET step='422' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+								
+							$messages = [
+									'type' => 'text',
+									'text' => "กรุณากรอก หมายเลขบัญชี"
+								];
+								
+							
+							
+						}
+						else
+						{
+							$sql = "UPDATE userstep SET step='421' WHERE uid='".$userid."'";
+																		
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							$messages = [
+									'type' => 'text',
+									'text' => "บัญชีของคุณคือ".$bank_id."\n\nถูกต้องกด #\nเเก้ไขกด *"
+								];
+								
+							
+						}
 						
 					}
 					else if($text=="3")
@@ -274,6 +315,77 @@ if (!is_null($events['events'])) {
 						
 					}
 					
+					
+					
+				}
+				else if($step=="422")#ถอนเงิน seven ไม่มีประวิตื
+				{
+					if(preg_match("/^[0-9]+$/", $text) == 1)
+					{
+						$user_id="not";
+						$sql1 = "SELECT * FROM userwithdrawinformation WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+
+										$user_id=$row["uid"];
+								}
+						}	
+						if($user_id=="not")#ครั้งเเรกไม่มีประวัติถอนเงินด้วย บัญชี
+						{
+							$sql = "INSERT INTO userwithdrawinformation(id, uid , bankaccount, idcarduseseven, bitcoinaccount)
+							VALUES ('', '$userid', '$text', 'not', 'not')";
+										
+							if (mysqli_query($link, $sql)) {
+										echo "New record created successfully";
+							} 
+							else {
+										echo "Error: " . $sql . "<br>" . mysqli_error($link);
+							}
+							
+							
+							$sql = "UPDATE userstep SET step='411' WHERE uid='".$userid."'";
+																			
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
+									}
+									
+									
+							$messages = [
+									'type' => 'text',
+									'text' => "บัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
+								];
+						}
+						else
+						{
+							
+							$sql = "UPDATE userwithdrawinformation SET bankaccount='".$text." WHERE uid='".$userid."'";									
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "บัญชีธนาคารของคุณคือ".$text."\n\nถูกต้องกด #\nเเก้ไขกด *"
+								];
+						}
+					}
+					else
+					{
+								
+						$messages = [
+								'type' => 'text',
+								'text' => "บัญชีธนาคารต้องเป็นตัวเลขเท่านั้น"
+							];
+						
+						
+					}
 					
 					
 				}
