@@ -485,6 +485,101 @@ if (!is_null($events['events'])) {
 					
 					
 				}
+				else if($step="4222223")
+				{
+					if($text=="#")
+					{
+						
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						
+						
+						$sql1 = "SELECT * FROM userwithdrawtracsection WHERE uid='".$userid."' AND transection='not'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_withdraw=$row["money"];
+								}
+							}
+						
+						$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+						$result = $link->query($sql1);
+						$check_member="1";		
+						$credit="0";
+						if ($result->num_rows > 0) {
+						// output data of each row
+							while($row = $result->fetch_assoc()) {
+										$credit_cal=$row["credit"];
+								}
+							}
+						$newcredit=(int)$credit_cal-(int)$credit_withdraw;
+						$newcredit_str=(string)$newcredit;
+						
+						$sql = "UPDATE userwithdrawtracsection SET transection='process' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$sql = "UPDATE userstep SET credit='".$newcredit_str."' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "เครติคคุณคือ".$newcredit."\nคุณถอนเงินออกมาจำนวน\n".$credit_withdraw." บาท\n\nระบบกำลังดำเนินการ ใช้เวลา ไม่เกิน 3 ชั่วโมง\n\nกด0 กลับสููเมนูหลัก"
+							];
+						
+					}
+					else if($text=="*")
+					{		
+						$sql = "DELETE FROM userwithdrawtracsection WHERE uid='".$userid."' AND transection='not'";
+						if ($link->query($sql) === TRUE) {
+							echo "Record deleted successfully";
+						} else {
+							echo "Error deleting record: " . $conn->error;
+						}
+										
+						$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
+																		
+						if ($link->query($sql) === TRUE) {
+								echo "Record updated successfully";
+						} else {
+								echo "Error updating record: " . $link->error;
+						}
+						
+						$messages = [
+								'type' => 'text',
+								'text' => "ยกเลิกเรียบร้อย\n\nกด0 กลับสููเมนูหลัก"
+							];
+						
+					}
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรุณาพิม # หรือ * เท่านั้น"
+									];
+						
+					}
+					
+					
+				}
 				else if($step=="4222")#ชื่อเจ้าของบัญชี
 				{
 					$user_id="not";
