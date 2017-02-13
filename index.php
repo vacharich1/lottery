@@ -77,124 +77,168 @@ if (!is_null($events['events'])) {
 				
 				if($step=="doneregis")
 				{
-					if($text=="1")
+					$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+					$result = $link->query($sql1);
+					$check_member="1";		
+					$credit="0";
+					if ($result->num_rows > 0) {
+					// output data of each row
+						while($row = $result->fetch_assoc()) {
+									$credit_cal=$row["credit"];
+							}
+						}
+					if($credit_cal=="0")
 					{
-						
-							$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
-							$result = $link->query($sql1);
-							$check_member="1";		
-							if ($result->num_rows > 0) {
-							// output data of each row
-								while($row = $result->fetch_assoc()) {
-
-											$credit=$row["credit"];
-									}
-								}	
+						if($text=="2")
+						{
 							
-							if($credit=="0")
-							{
-									$messages = [
-									'type' => 'text',
-									'text' => "คุณไม่มีเครดิต\nกรุณาเติมเงิน\nกด 2 เพิ่มเข้าใช้งานในส่วนนี้ \nขออภัยอย่างสูง"
+								$messages = [
+								'type' => 'text',
+								'text' => "เลือกบัญชีธนาคารที่ต้องการโอน\n\nกด1 scb\nกด2 kbank\nกด0 กลับสููเมนูหลัก"
 								];
 								
-							}
-							else
-							{
-							
-									$messages = [
-									'type' => 'text',
-									'text' => "กด 1 เเทงสองตัวบนเเละล่าง\nกด2 เเทงสองตัวบน\nกด3 เเทงสองตัวล่าง\nกด4 เเทงสามตัว\n\nกด 0 กลับสู่เมนูหลัก"
-								];
-								
-								$sql = "UPDATE userstep SET step='1' WHERE uid='".$userid."'";
-																		
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-							}
-					}
-					else if($text=="2")
-					{
-						
-							$messages = [
-							'type' => 'text',
-							'text' => "เลือกบัญชีธนาคารที่ต้องการโอน\n\nกด1 scb\nกด2 kbank\nกด0 กลับสููเมนูหลัก"
-							];
-							
-							$sql = "UPDATE userstep SET step='2' WHERE uid='".$userid."'";
-																		
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-						
-					
-					}
-					else if($text=="3")
-					{
-							$messages = [
-								'type' => 'text',
-								'text' => "เเจ้งยอดโอน\n\nระบบยังไม่สามารถใช้งานในส่วนนี้ได้"
-							];
-						
-					}
-					else if($text=="5")
-					{
-							$messages = [
-								'type' => 'text',
-								'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
-							];
-						
-					}
-					else if($text=="4")
-					{
-						
-							$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
-							$result = $link->query($sql1);
-							$check_member="1";		
-							if ($result->num_rows > 0) {
-							// output data of each row
-								while($row = $result->fetch_assoc()) {
-
-											$credit=$row["credit"];
+								$sql = "UPDATE userstep SET step='2' WHERE uid='".$userid."'";
+																			
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
 									}
-								}	
-								
-							$sql = "UPDATE userstep SET step='4' WHERE uid='".$userid."'";
-																		
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								
-							$messages = [
-							'type' => 'text',
-							'text' => "ยอดเงินของคุณ มี".$credit." บาท ต้องการถอนผ่านทาง\n\nกด 1 seven\nกด 2 บัญชี\nกด 3 bitcoin"
-							];
-							
 							
 						
-					}
-					else if($text=="0")
-					{
-							$messages = [
-								'type' => 'text',
-								'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
-							];
+						}
+						else
+						{
+								$messages = [
+										'type' => 'text',
+										'text' => "คุณไม่มีเครดิต\nกรุณาเติมเงิน\nกด 2 เติมเงินเพื่อเข้าใช้งานในส่วนนี้ \nขออภัยอย่างสูง"
+									];
+								
+						}
+						
 						
 					}
 					else
 					{
-							$messages = [
+						if($text=="1")
+						{
+							
+								$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+								$result = $link->query($sql1);
+								$check_member="1";		
+								if ($result->num_rows > 0) {
+								// output data of each row
+									while($row = $result->fetch_assoc()) {
+	
+												$credit=$row["credit"];
+										}
+									}	
+								
+								if($credit=="0")
+								{
+										$messages = [
+										'type' => 'text',
+										'text' => "คุณไม่มีเครดิต\nกรุณาเติมเงิน\nกด 2 เพิ่มเข้าใช้งานในส่วนนี้ \nขออภัยอย่างสูง"
+									];
+									
+								}
+								else
+								{
+								
+										$messages = [
+										'type' => 'text',
+										'text' => "กด 1 เเทงสองตัวบนเเละล่าง\nกด2 เเทงสองตัวบน\nกด3 เเทงสองตัวล่าง\nกด4 เเทงสามตัว\n\nกด 0 กลับสู่เมนูหลัก"
+									];
+									
+									$sql = "UPDATE userstep SET step='1' WHERE uid='".$userid."'";
+																			
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
+									}
+								}
+						}
+						else if($text=="2")
+						{
+							
+								$messages = [
 								'type' => 'text',
-								'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
-							];
+								'text' => "เลือกบัญชีธนาคารที่ต้องการโอน\n\nกด1 scb\nกด2 kbank\nกด0 กลับสููเมนูหลัก"
+								];
+								
+								$sql = "UPDATE userstep SET step='2' WHERE uid='".$userid."'";
+																			
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
+									}
+							
 						
+						}
+						else if($text=="3")
+						{
+								$messages = [
+									'type' => 'text',
+									'text' => "เเจ้งยอดโอน\n\nระบบยังไม่สามารถใช้งานในส่วนนี้ได้"
+								];
+							
+						}
+						else if($text=="5")
+						{
+								$messages = [
+									'type' => 'text',
+									'text' => "ขณะนี้ ยอดเงินของคุณมี ".$credit." บาท"
+								];
+							
+						}
+						else if($text=="4")
+						{
+							
+								$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+								$result = $link->query($sql1);
+								$check_member="1";		
+								if ($result->num_rows > 0) {
+								// output data of each row
+									while($row = $result->fetch_assoc()) {
+	
+												$credit=$row["credit"];
+										}
+									}	
+									
+								$sql = "UPDATE userstep SET step='4' WHERE uid='".$userid."'";
+																			
+									if ($link->query($sql) === TRUE) {
+											echo "Record updated successfully";
+									} else {
+											echo "Error updating record: " . $link->error;
+									}
+									
+								$messages = [
+								'type' => 'text',
+								'text' => "ยอดเงินของคุณ มี".$credit." บาท ต้องการถอนผ่านทาง\n\nกด 1 seven\nกด 2 บัญชี\nกด 3 bitcoin"
+								];
+								
+								
+							
+						}
+						else if($text=="0")
+						{
+								$messages = [
+									'type' => 'text',
+									'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
+								];
+							
+						}
+						else
+						{
+								$messages = [
+									'type' => 'text',
+									'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
+								];
+							
+						}
 					}
 					
 				}
