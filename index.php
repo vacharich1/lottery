@@ -181,7 +181,7 @@ if (!is_null($events['events'])) {
 										'type' => 'text',
 										'text' => "ส่งรหัส".$text."เรียบร้อย สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
 							];	
-							$date = new DateTime();
+							$date = new DateTime('now');
 							$dateuse=date_format($date, 'd/m/Y H:i:s');
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
