@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("Asia/Bangkok");
 $host= "sql6.freemysqlhosting.net";
 
 $db = "sql6157803";
@@ -186,7 +187,7 @@ if (!is_null($events['events'])) {
 							//$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
 							//$dateuse=CURDATE();
 							
-							ini_set( 'date.timezone', 'Asia/Bangkok' ); 
+
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
 										VALUES ('', '$userid', '$telephone', '$text', NOW())";
