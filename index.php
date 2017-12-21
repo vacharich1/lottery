@@ -182,11 +182,11 @@ if (!is_null($events['events'])) {
 										'text' => "ส่งรหัส".$text."เรียบร้อย สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
 							];	
 							//$date = new DateTime('now');
-							$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-							$dateuse=CURDATE();
+							//$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
+							//$dateuse=CURDATE();
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
-										VALUES ('', '$userid', '$telephone', '$text', '$dateuse')";
+										VALUES ('', '$userid', '$telephone', '$text', NOW())";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
