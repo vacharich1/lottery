@@ -227,7 +227,7 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
-							$sql = "UPDATE member SET telephone='".$telephone."' WHERE uid='".$userid."'";
+							$sql = "UPDATE member SET telephone='".$telephone."' WHERE userid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
