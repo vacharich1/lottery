@@ -257,7 +257,7 @@ if (!is_null($events['events'])) {
 										'text' => "โปรดพิมหมายเลยโทรศัพท์"
 									];
 									
-								$sql = "UPDATE userstep1 SET step='regis0' WHERE uid='".$userid."'";
+								$sql = "UPDATE userstep1 SET step='regis0' WHERE userid='".$userid."'";
 																
 								if ($link->query($sql) === TRUE) {
 										echo "Record updated successfully";
