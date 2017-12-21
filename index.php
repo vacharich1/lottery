@@ -319,7 +319,7 @@ if (!is_null($events['events'])) {
 							$step="regis0";
 							
 							
-							$sql = "INSERT INTO userstep1(id, uid, telephone, step)
+							$sql = "INSERT INTO userstep1(id, userid, telephone, step)
 									VALUES ('', '$userid', '$telephone', '$step')";
 												
 									if (mysqli_query($link, $sql)) {
