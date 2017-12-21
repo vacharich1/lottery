@@ -54,14 +54,7 @@ if (!is_null($events['events'])) {
 				$text = $event['message']['text'];
 				// Get replyToken
 				$replyToken = $event['replyToken'];
-				if($text=="คำสั่ง" || $text=="0")
-				{
-					// Build message to reply back
-					$messages = [
-								'type' => 'text',
-								'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
-					];
-				}
+				
 				
 				$sql1 = "SELECT * FROM userstep1 WHERE userid='".$userid."'";
 				$result = $link->query($sql1);
