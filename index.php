@@ -84,6 +84,14 @@ if (!is_null($events['events'])) {
 							}
 							
 							
+							$sql = "UPDATE member1 SET telephone='".$telephone."' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
 							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
@@ -227,13 +235,7 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
-							$sql = "UPDATE member1 SET telephone='".$telephone."' WHERE userid='".$userid."'";
-															
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
+							
 							
 							$sql = "UPDATE userstep1 SET step='doneregis' WHERE userid='".$userid."'";
 															
