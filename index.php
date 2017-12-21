@@ -183,7 +183,7 @@ if (!is_null($events['events'])) {
 							];	
 							//$date = new DateTime('now');
 							$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-							$dateuse=date_format($dtz, 'd/m/Y H:i:s');
+							$dateuse=CURDATE();
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
 										VALUES ('', '$userid', '$telephone', '$text', '$dateuse')";
