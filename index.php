@@ -99,11 +99,6 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
-							
-							
-							
-							
-							
 
 							$sql = "UPDATE userstep1 SET step='doneregis' WHERE userid='".$userid."'";
 															
