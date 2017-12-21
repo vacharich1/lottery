@@ -185,12 +185,12 @@ if (!is_null($events['events'])) {
 							];	
 							//$date = new DateTime('now');
 							//$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-							//$dateuse=NOW(), INTERVAL 7 HOUR
+							$DateResultNow=date(NOW(), mktime(date("H")+7, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
 							
 
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
-										VALUES ('', '$userid', '$telephone', '$text', (NOW(), INTERVAL 7 HOUR))";
+										VALUES ('', '$userid', '$telephone', '$text', '$DateResultNow')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
