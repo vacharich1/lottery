@@ -160,6 +160,51 @@ if (!is_null($events['events'])) {
 							}
 						
 					}
+					else
+					{
+						// Create connection
+						$sql1 = "SELECT * FROM number";
+						$result = $link->query($sql1);
+						$checknumber="0";
+						if ($result->num_rows > 0) {
+							// output data of each row
+							while($row = $result->fetch_assoc()) {
+								if($text==$row["number"])
+								{
+									$checknumber="1";
+								}
+							}
+						}
+						if($checknumber=="1")
+						{
+							$messages = [
+										'type' => 'text',
+										'text' => "ส่งรหัส".$text."เรียบร้อย สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
+							];	
+							$date = new DateTime();
+							$dateuse=date_format($date, 'd/m/Y H:i:s');
+							
+							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
+										VALUES ('', '$userid', '$telephone', '$text', '$dateuse')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
+						}
+						else
+						{
+							$messages = [
+										'type' => 'text',
+										'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล โปรดตรวจสอบเลขชิคโชต"
+							];	
+							
+						}
+						
+						
+					}
 					
 				}
 						
