@@ -270,10 +270,29 @@ if (!is_null($events['events'])) {
 					}//if(preg_match("/^[0-9]+$/", $text) == 1)
 					else
 					{
+						if($text=='*')
+						{
+								$messages = [
+										'type' => 'text',
+										'text' => "โปรดพิมหมายเลยโทรศัพท์"
+									];
+									
+								$sql = "UPDATE userstep1 SET step='regis0' WHERE userid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							
+						}
+						else
+						{
 						$messages = [
 										'type' => 'text',
 										'text' => "กรอกข้อมูลไม่ถูกต้อง\n\n   ==== เมนูหลัก ====\n\n กด * เพื่อเเก้ไขหมายเลขโทรศัพท์\n\n กด 1 เพื่อดูเลขที่ส่งชิงโชค\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
 									];
+						}
 					}
 					
 				}
