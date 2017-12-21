@@ -63,7 +63,7 @@ if (!is_null($events['events'])) {
 					];
 				}
 				
-				$sql1 = "SELECT * FROM userstep1 WHERE uid='".$userid."'";
+				$sql1 = "SELECT * FROM userstep1 WHERE userid='".$userid."'";
 				$result = $link->query($sql1);
 				$check_member="1";		
 				if ($result->num_rows > 0) {
@@ -162,8 +162,6 @@ if (!is_null($events['events'])) {
 					
 				}
 						
-					
-				
 	
 				// Make a POST Request to Messaging API to reply to sender
 				$url = 'https://api.line.me/v2/bot/message/reply';
