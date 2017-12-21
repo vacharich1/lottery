@@ -145,7 +145,7 @@ if (!is_null($events['events'])) {
 				}
 				if($step=="doneregis")
 				{
-					if(preg_match("#*/^[0-9]+$/", $text) == 1)
+					if(preg_match("[0-9]/#/*", $text) == 1)
 					{
 						if($text=='0')
 						{
