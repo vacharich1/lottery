@@ -145,7 +145,38 @@ if (!is_null($events['events'])) {
 				}
 				if($step=="doneregis")
 				{
-					if($text=='*')
+					if($text=='0')
+					{
+							$messages = [
+									'type' => 'text',
+									'text' => "   ==== เมนูหลักกด ====\n\n * เพื่อเเก้ไขหมายเลขโทรศัพท์\n\n กด 1 เพื่อดูเลขที่ส่งชิงโชค\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
+								];
+
+					}
+					else if($text=='1')
+					{
+							
+								
+							$sql1 = "SELECT * FROM numberfromuser";
+							$result = $link->query($sql1);
+							$testsend="";
+							if ($result->num_rows > 0) {
+								// output data of each row
+								while($row = $result->fetch_assoc()) {
+									if($userid==$row["userid"])
+									{
+										$testsend=$testsend." ".$row["number"]."\n";
+									}
+								}
+							}
+							
+							$messages = [
+									'type' => 'text',
+									'text' => "เลขที่ส่งชิงโชค"."\n\n".$testsend
+								];
+						
+					}
+					else if($text=='*')
 					{
 							$messages = [
 									'type' => 'text',
@@ -196,7 +227,7 @@ if (!is_null($events['events'])) {
 							  {
 								  $messages = [
 											  'type' => 'text',
-											  'text' => "ส่งรหัส".$text."เรียบร้อย\n\n สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
+											  'text' => "ส่งรหัส".$text."เรียบร้อย\n\n กด 0 เพื่อกลับสู่เมนูหลัก\n\n หรือสามารถพิมรหัสส่งชิงโชคต่อได้เลย"
 								  ];	
 								  //$date = new DateTime('now');
 								  //$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
@@ -219,7 +250,7 @@ if (!is_null($events['events'])) {
 							  {
 								  $messages = [
 											  'type' => 'text',
-											  'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล โปรดตรวจสอบเลขชิคโชต"
+											  'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล\n\n กด 0 เพื่อกลับสู่เมนูหลัก \n\n โปรดตรวจสอบเลขชิงโชค"
 								  ];	
 								  
 							  }
@@ -228,7 +259,7 @@ if (!is_null($events['events'])) {
 						{
 							$messages = [
 										  'type' => 'text',
-										  'text' => "รหัส".$text."ถูกส่งชิงโชคเเล้ว โปรส่งรหัสอื่น"
+										  'text' => "รหัส".$text."ถูกส่งชิงโชคเเล้ว\n\n กด 0 เพื่อกลับสู่เมนูหลัก\n\n โปรส่งรหัสอื่น"
 							  ];	
 						}
 						
