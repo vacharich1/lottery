@@ -151,13 +151,6 @@ if (!is_null($events['events'])) {
 					{
 							
 							$telephone=$text;
-							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
-															
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
 							
 							
 							$sql = "UPDATE userstep1 SET telephone='".$telephone."' WHERE uid='".$userid."'";
@@ -167,6 +160,18 @@ if (!is_null($events['events'])) {
 							} else {
 									echo "Error updating record: " . $link->error;
 							}
+							
+							
+							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
+							
 							
 							
 							
