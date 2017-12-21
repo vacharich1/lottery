@@ -165,48 +165,71 @@ if (!is_null($events['events'])) {
 					{
 						// Create connection
 						
-						$sql1 = "SELECT * FROM number";
+						$sql1 = "SELECT * FROM numberfromuser";
 						$result = $link->query($sql1);
-						$checknumber="0";
+						$checknuberuse="0";
 						if ($result->num_rows > 0) {
 							// output data of each row
 							while($row = $result->fetch_assoc()) {
 								if($text==$row["number"])
 								{
-									$checknumber="1";
+									$checknuberuse="1";	
 								}
 							}
 						}
-						if($checknumber=="1")
+						
+						if($checknuberuse=="0")
 						{
-							$messages = [
-										'type' => 'text',
-										'text' => "ส่งรหัส".$text."เรียบร้อย สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
-							];	
-							//$date = new DateTime('now');
-							//$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-							//$dateuse=NOW();
-							$DateResultNow=date("Y-m-d H:i:s", mktime(date("H")+7, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
-							
-
-							
-							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
-										VALUES ('', '$userid', '$telephone', '$text', '$DateResultNow')";
-													
-										if (mysqli_query($link, $sql)) {
-													echo "New record created successfully";
-										} 
-										else {
-													echo "Error: " . $sql . "<br>" . mysqli_error($link);
-										}
+							  $sql1 = "SELECT * FROM number";
+							  $result = $link->query($sql1);
+							  $checknumber="0";
+							  if ($result->num_rows > 0) {
+								  // output data of each row
+								  while($row = $result->fetch_assoc()) {
+									  if($text==$row["number"])
+									  {
+										  $checknumber="1";
+									  }
+								  }
+							  }
+							  if($checknumber=="1")
+							  {
+								  $messages = [
+											  'type' => 'text',
+											  'text' => "ส่งรหัส".$text."เรียบร้อย\n\n สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
+								  ];	
+								  //$date = new DateTime('now');
+								  //$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
+								  //$dateuse=NOW();
+								  $DateResultNow=date("Y-m-d H:i:s", mktime(date("H")+0, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
+								  
+	  
+								  
+								  $sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
+											  VALUES ('', '$userid', '$telephone', '$text', '$DateResultNow')";
+														  
+											  if (mysqli_query($link, $sql)) {
+														  echo "New record created successfully";
+											  } 
+											  else {
+														  echo "Error: " . $sql . "<br>" . mysqli_error($link);
+											  }
+							  }
+							  else
+							  {
+								  $messages = [
+											  'type' => 'text',
+											  'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล โปรดตรวจสอบเลขชิคโชต"
+								  ];	
+								  
+							  }
 						}
 						else
 						{
 							$messages = [
-										'type' => 'text',
-										'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล โปรดตรวจสอบเลขชิคโชต"
-							];	
-							
+										  'type' => 'text',
+										  'text' => "รหัส".$text."ถูกส่งชิงโชคเเล้ว โปรส่งรหัสอื่น"
+							  ];	
 						}
 						
 						
