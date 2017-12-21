@@ -153,7 +153,7 @@ if (!is_null($events['events'])) {
 							$telephone=$text;
 							
 							
-							$sql = "UPDATE userstep1 SET telephone='".$telephone."' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep1 SET telephone='".$telephone."' WHERE userid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -176,7 +176,7 @@ if (!is_null($events['events'])) {
 							
 							
 
-							$sql = "UPDATE userstep1 SET step='doneregis' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep1 SET step='doneregis' WHERE userid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
