@@ -75,23 +75,96 @@ if (!is_null($events['events'])) {
 						}
 					}
 				
-				if($step=="doneregis")
+				
+				if($step=="regis0")
 				{
-					if($text=="0")
+					if(preg_match("/^[0-9]+$/", $text) == 1)
 					{
+							
+							$telephone=$text;
+							
+							
+							$sql = "UPDATE userstep1 SET telephone='".$telephone."' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
+							$sql = "UPDATE userregister SET telephone='".$telephone."' WHERE uid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
+							
+							
+							
+							
+
+							$sql = "UPDATE userstep1 SET step='doneregis' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+							
+							
 							$messages = [
-								'type' => 'text',
-								'text' => "=== เมนูหลัก ===\n\nกด1 เเทงหวย\nกด2 จำนวนเงินที่ต้องการฝาก\nกด3 เเจ้งการโอนเงิน\nกด4 แจ้งถอนเงิน\nกด5 ตรวจสอบยอดเงิน"
-							];
-						
+									'type' => 'text',
+									'text' => "	หมายเลขโทรศัพท์ของคุณคือ".$text."\n\nหากต้องการเเก้ไขเบอร์ กด * เพื่อเเก้ไขเบอร์\n\n สามารถพิมรหัสส่งชิงโชคได้เลย"
+								];
+							
 					}
 					else
 					{
+							if($text=="สมัครสมาชิก")
+							{
+								$messages = [
+									'type' => 'text',
+									'text' => "กรุณากรอก หมายเลขโทรศัพท์ เพื่อสมัครสมาชิก"
+								];
+								
+							}
+							else
+							{
+								$messages = [
+										'type' => 'text',
+										'text' => "หมายเลขโทรศัพท์ต้องเป็นตัวเลขเท่านั้น \n\nโปรดพิมหมายเลขโทรศัพท์ใหม่อีกครั้ง"
+									];
+								$messages1 = [
+										'type' => 'text',
+										'text' => "โปรดพิมหมายเลขโทรศัพท์ใหม่อีกครั้ง"
+									];
+							}
+					}
+					
+						// Create connection
+					
+				}
+				if($step=="doneregis")
+				{
+					if($text=='*')
+					{
 							$messages = [
 									'type' => 'text',
-									'text' => "คุณไม่มีเครดิต\nกรุณาเติมเงิน\n\nกด 2 เติมเงินเพื่อเข้าใช้งานในส่วนนี้ \n\nขออภัยอย่างสูง \n\nกด 0 กลับสู่เมนูหลัก"
+									'text' => "โปรดพิมหมายเลยโทรศัพท์"
 								];
-							
+								
+							$sql = "UPDATE userstep1 SET step='regis0' WHERE userid='".$userid."'";
+															
+							if ($link->query($sql) === TRUE) {
+									echo "Record updated successfully";
+							} else {
+									echo "Error updating record: " . $link->error;
+							}
+						
 					}
 					
 				}
@@ -244,7 +317,7 @@ if (!is_null($events['events'])) {
 													echo "Error: " . $sql . "<br>" . mysqli_error($link);
 										}
 										
-							$text33= "ยืนยันการเป็นสมาชิก \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\n\n เริ่มใช้งานได้เลย พิม 0 เพื่อดูคำสั่งใช้งาน";
+							$text33= "เบอร์โทรศัพท์ของคุณคือ ".$telephone."\n\nหากต้องการเเก้ไขเบอร์ กด * เพื่อเเก้ไขเบอร์\n\n สามารถพิมรหัสส่งชิงโชคได้เลย";
 							$messages = [
 										'type' => 'text',
 										'text' => $text33
