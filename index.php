@@ -181,11 +181,9 @@ if (!is_null($events['events'])) {
 										'type' => 'text',
 										'text' => "ส่งรหัส".$text."เรียบร้อย สามารถพิมรหัสส่งชิงโชคต่อได้เลย"
 							];	
-							$date = new DateTime('now');
+							//$date = new DateTime('now');
 							$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-							$now = new DateTime(date('d/m/Y H:i:s'), $dtz);
-							//$dateuse=date_format($date, 'd/m/Y H:i:s');
-							$dateuse= $now;
+							$dateuse=date_format($dtz, 'd/m/Y H:i:s');
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
 										VALUES ('', '$userid', '$telephone', '$text', '$dateuse')";
