@@ -132,7 +132,7 @@ if (!is_null($events['events'])) {
 				$step="";
 				$check="000";
 				// Create connection
-				$sql1 = "SELECT * FROM userstep";
+				$sql1 = "SELECT * FROM userstep1";
 				$result = $link->query($sql1);
 				
 				if ($result->num_rows > 0) {
@@ -160,7 +160,7 @@ if (!is_null($events['events'])) {
 							}
 							
 							
-							$sql = "UPDATE userstep SET telephone='".$telephone."' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep1 SET telephone='".$telephone."' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -171,7 +171,7 @@ if (!is_null($events['events'])) {
 							
 							
 
-							$sql = "UPDATE userstep SET step='regis1' WHERE uid='".$userid."'";
+							$sql = "UPDATE userstep1 SET step='doneregis' WHERE uid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -182,7 +182,7 @@ if (!is_null($events['events'])) {
 							
 							$messages = [
 									'type' => 'text',
-									'text' => "โปรดกรอกรหัสผ่าน ต้องอักษรพิเศษอย่างน้อย1ตัวคือ #$%^*!"
+									'text' => "	หมายเลขโทรศัพท์ของคุณคือ".$text."\n\nกด # ยืนยันหมายเลขถูกต้อง \n\nกด * เเก้ไขหมายเลข"
 								];
 							
 					}
@@ -225,13 +225,12 @@ if (!is_null($events['events'])) {
 									if($userid==$row["uid"])
 									{
 										$telephone=$row["telephone"];
-										$password=$row["password"];
 									}
 								}
 							}
 									
 							$sql = "INSERT INTO member(id, userid , telephone, password)
-										VALUES ('', '$userid', '$telephone', '$password')";
+										VALUES ('', '$userid', '$telephone', '')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
@@ -240,7 +239,7 @@ if (!is_null($events['events'])) {
 													echo "Error: " . $sql . "<br>" . mysqli_error($link);
 										}
 										
-							$text33= "ยืนยันการเป็นสมาชิก \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\nรหัส : ".$password."\n เริ่มใช้งานได้เลย พิม 0 เพื่อดูคำสั่งใช้งาน";
+							$text33= "ยืนยันการเป็นสมาชิก \nเบอร์โทรศัพท์ของคุณคือ ".$telephone."\n\n เริ่มใช้งานได้เลย พิม 0 เพื่อดูคำสั่งใช้งาน";
 							$messages = [
 										'type' => 'text',
 										'text' => $text33
@@ -253,7 +252,7 @@ if (!is_null($events['events'])) {
 										'text' => "โปรดพิมหมายเลยโทรศัพท์"
 									];
 									
-								$sql = "UPDATE userstep SET step='regis0' WHERE uid='".$userid."'";
+								$sql = "UPDATE userstep1 SET step='regis0' WHERE uid='".$userid."'";
 																
 								if ($link->query($sql) === TRUE) {
 										echo "Record updated successfully";
@@ -270,72 +269,6 @@ if (!is_null($events['events'])) {
 									];
 							
 						}
-				}
-				else if($step=="regis1")
-				{
-					if(preg_match("/^[a-zA-Z0-9#$%^&*!]+$/", $text) == 1)
-					{
-							$chars = str_split($text);
-							foreach ($chars as $char)
-							{
-								   if ($char === '#' || $char === '$' || $char === '%' || $char === '^' || $char === '!' || $char === '&' || $char === '*')
-								   {
-									   $check = "pass";
-								   }
-								   else
-								   {
-									   $check = "not pass";
-								   }
-							}
-							if($check == "pass")
-							{
-								$password=$text;
-								$sql = "UPDATE userregister SET password='".$password."' WHERE uid='".$userid."'";
-																
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-	
-								$sql = "UPDATE userstep SET step='doneregis' WHERE uid='".$userid."'";
-																
-								if ($link->query($sql) === TRUE) {
-										echo "Record updated successfully";
-								} else {
-										echo "Error updating record: " . $link->error;
-								}
-								
-								$text1="สมัครสมาชิกเรียบร้อย \n\nเบอร์ ".$telephone."\nรหัส : ".$text."\n ถูกต้องกรุณากด #\nหากต้องการเเก้ไขกด *\n";
-								$messages = [
-										'type' => 'text',
-										'text' => $text1
-									];
-							}
-							else
-							{
-								$messages = [
-									'type' => 'text',
-									'text' => "รหัสผ่านมีได้เเค่ตัวหนังสือ a-z 0-9 เเละอักษรพิเศษเท่านั้น\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
-								];
-								
-							}
-							
-					}
-					else
-					{
-							$messages = [
-									'type' => 'text',
-									'text' => "เพื่อความปลอดภัยรหัสผ่านต้องมีตัวอักษรพิเศษอย่างน้อย 1 ตัวด้วยเช่น #$%^&*!\n\nโปรดพิมรหัสผ่านใหม่อีกครั้ง"
-								];
-							$messages1 = [
-									'type' => 'text',
-									'text' => "โปรดพิมรหัสผ่านใหม่อีกครั้ง"
-								];
-					}
-					
-						// Create connection
-					
 				}
 				else
 				{
@@ -376,12 +309,25 @@ if (!is_null($events['events'])) {
 					}
 					else
 					{
-						if($telephone=="telephone" && $password=="")#no data
+						if($telephone=="telephone")#no data
 						{
 							$messages = [
 								'type' => 'text',
-								'text' => "ยินดีต้อนรับอีกครั้ง สู่ หวยออนไลน์ รบกวนพิมคำว่า 1 เพื่อสมัครสมาชิก"
+								'text' => "ยินดีต้อนรับอีกครั้ง สู่ ระบบชิงโชค\n\nโปรดกรอก หมายเลขโทรศัพท์ เพื่อส่งรหัสชิงโชค"
 							];
+							
+							$step="regis0";
+							
+							
+							$sql = "INSERT INTO userstep1(id, uid, telephone, step)
+									VALUES ('', '$userid', '$telephone', '$step')";
+												
+									if (mysqli_query($link, $sql)) {
+												echo "New record created successfully";
+									} 
+									else {
+												echo "Error: " . $sql . "<br>" . mysqli_error($link);
+									}
 							
 						}
 					}
