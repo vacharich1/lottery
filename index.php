@@ -145,125 +145,135 @@ if (!is_null($events['events'])) {
 				}
 				if($step=="doneregis")
 				{
-					if($text=='0')
+					if(preg_match("#*/^[0-9]+$/", $text) == 1)
 					{
-							$messages = [
-									'type' => 'text',
-									'text' => "   ==== เมนูหลัก ====\n\n กด * เพื่อเเก้ไขหมายเลขโทรศัพท์\n\n กด 1 เพื่อดูเลขที่ส่งชิงโชค\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
-								];
-
-					}
-					else if($text=='1')
-					{
-							
+						if($text=='0')
+						{
+								$messages = [
+										'type' => 'text',
+										'text' => "   ==== เมนูหลัก ====\n\n กด * เพื่อเเก้ไขหมายเลขโทรศัพท์\n\n กด 1 เพื่อดูเลขที่ส่งชิงโชค\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
+									];
+	
+						}
+						else if($text=='1')
+						{
 								
+									
+								$sql1 = "SELECT * FROM numberfromuser";
+								$result = $link->query($sql1);
+								$testsend="";
+								if ($result->num_rows > 0) {
+									// output data of each row
+									while($row = $result->fetch_assoc()) {
+										if($userid==$row["userid"])
+										{
+											$testsend=$testsend." ".$row["number"]."\n";
+										}
+									}
+								}
+								
+								$messages = [
+										'type' => 'text',
+										'text' => "เลขที่ส่งชิงโชค"."\n\n".$testsend."\n\nกด 0 เมนูหลัก\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
+									];
+							
+						}
+						else if($text=='*')
+						{
+								$messages = [
+										'type' => 'text',
+										'text' => "โปรดพิมหมายเลยโทรศัพท์"
+									];
+									
+								$sql = "UPDATE userstep1 SET step='regis0' WHERE userid='".$userid."'";
+																
+								if ($link->query($sql) === TRUE) {
+										echo "Record updated successfully";
+								} else {
+										echo "Error updating record: " . $link->error;
+								}
+							
+						}
+						else
+						{
+							// Create connection
+							
 							$sql1 = "SELECT * FROM numberfromuser";
 							$result = $link->query($sql1);
-							$testsend="";
+							$checknuberuse="0";
 							if ($result->num_rows > 0) {
 								// output data of each row
 								while($row = $result->fetch_assoc()) {
-									if($userid==$row["userid"])
+									if($text==$row["number"])
 									{
-										$testsend=$testsend." ".$row["number"]."\n";
+										$checknuberuse="1";	
 									}
 								}
 							}
 							
-							$messages = [
-									'type' => 'text',
-									'text' => "เลขที่ส่งชิงโชค"."\n\n".$testsend."\n\nกด 0 เมนูหลัก\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
-								];
-						
-					}
-					else if($text=='*')
-					{
-							$messages = [
-									'type' => 'text',
-									'text' => "โปรดพิมหมายเลยโทรศัพท์"
-								];
-								
-							$sql = "UPDATE userstep1 SET step='regis0' WHERE userid='".$userid."'";
-															
-							if ($link->query($sql) === TRUE) {
-									echo "Record updated successfully";
-							} else {
-									echo "Error updating record: " . $link->error;
-							}
-						
-					}
-					else
-					{
-						// Create connection
-						
-						$sql1 = "SELECT * FROM numberfromuser";
-						$result = $link->query($sql1);
-						$checknuberuse="0";
-						if ($result->num_rows > 0) {
-							// output data of each row
-							while($row = $result->fetch_assoc()) {
-								if($text==$row["number"])
-								{
-									$checknuberuse="1";	
-								}
-							}
-						}
-						
-						if($checknuberuse=="0")
-						{
-							  $sql1 = "SELECT * FROM number";
-							  $result = $link->query($sql1);
-							  $checknumber="0";
-							  if ($result->num_rows > 0) {
-								  // output data of each row
-								  while($row = $result->fetch_assoc()) {
-									  if($text==$row["number"])
-									  {
-										  $checknumber="1";
+							if($checknuberuse=="0")
+							{
+								  $sql1 = "SELECT * FROM number";
+								  $result = $link->query($sql1);
+								  $checknumber="0";
+								  if ($result->num_rows > 0) {
+									  // output data of each row
+									  while($row = $result->fetch_assoc()) {
+										  if($text==$row["number"])
+										  {
+											  $checknumber="1";
+										  }
 									  }
 								  }
-							  }
-							  if($checknumber=="1")
-							  {
-								  $messages = [
+								  if($checknumber=="1")
+								  {
+									  $messages = [
+												  'type' => 'text',
+												  'text' => "ส่งรหัส".$text."เรียบร้อย\n\n กด 0 เพื่อกลับสู่เมนูหลัก\n\n หรือสามารถพิมรหัสส่งชิงโชคต่อได้เลย"
+									  ];	
+									  //$date = new DateTime('now');
+									  //$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
+									  //$dateuse=NOW();
+									  $DateResultNow=date("Y-m-d H:i:s", mktime(date("H")+0, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
+									  
+		  
+									  
+									  $sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
+												  VALUES ('', '$userid', '$telephone', '$text', '$DateResultNow')";
+															  
+												  if (mysqli_query($link, $sql)) {
+															  echo "New record created successfully";
+												  } 
+												  else {
+															  echo "Error: " . $sql . "<br>" . mysqli_error($link);
+												  }
+								  }
+								  else
+								  {
+									  $messages = [
+												  'type' => 'text',
+												  'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล\n\n กด 0 เพื่อกลับสู่เมนูหลัก \n\n โปรดตรวจสอบเลขชิงโชค"
+									  ];	
+									  
+								  }
+							}
+							else
+							{
+								$messages = [
 											  'type' => 'text',
-											  'text' => "ส่งรหัส".$text."เรียบร้อย\n\n กด 0 เพื่อกลับสู่เมนูหลัก\n\n หรือสามารถพิมรหัสส่งชิงโชคต่อได้เลย"
+											  'text' => "รหัส".$text."ถูกส่งชิงโชคเเล้ว\n\n กด 0 เพื่อกลับสู่เมนูหลัก\n\n โปรส่งรหัสอื่น"
 								  ];	
-								  //$date = new DateTime('now');
-								  //$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-								  //$dateuse=NOW();
-								  $DateResultNow=date("Y-m-d H:i:s", mktime(date("H")+0, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
-								  
-	  
-								  
-								  $sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
-											  VALUES ('', '$userid', '$telephone', '$text', '$DateResultNow')";
-														  
-											  if (mysqli_query($link, $sql)) {
-														  echo "New record created successfully";
-											  } 
-											  else {
-														  echo "Error: " . $sql . "<br>" . mysqli_error($link);
-											  }
-							  }
-							  else
-							  {
-								  $messages = [
-											  'type' => 'text',
-											  'text' => "รหัส".$text."ไม่ตรงกับฐานข้อมูล\n\n กด 0 เพื่อกลับสู่เมนูหลัก \n\n โปรดตรวจสอบเลขชิงโชค"
-								  ];	
-								  
-							  }
+							}
+							
+							
 						}
-						else
-						{
-							$messages = [
-										  'type' => 'text',
-										  'text' => "รหัส".$text."ถูกส่งชิงโชคเเล้ว\n\n กด 0 เพื่อกลับสู่เมนูหลัก\n\n โปรส่งรหัสอื่น"
-							  ];	
-						}
-						
-						
+					}//if(preg_match("/^[0-9]+$/", $text) == 1)
+					else
+					{
+						$messages = [
+										'type' => 'text',
+										'text' => "กรอกข้อมูลไม่ถูกต้อง\n\n   ==== เมนูหลัก ====\n\n กด * เพื่อเเก้ไขหมายเลขโทรศัพท์\n\n กด 1 เพื่อดูเลขที่ส่งชิงโชค\n\n หรือสามารถพิมส่งเลขชิงโชคได้เลย"
+									];
 					}
 					
 				}
