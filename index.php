@@ -32,7 +32,7 @@ if (!is_null($events['events'])) {
 	// Loop through each event
 	foreach ($events['events'] as $event) {
 		
-		$sql1 = "SELECT * FROM member";
+		$sql1 = "SELECT * FROM member1";
 		$result = $link->query($sql1);
 		$check_member="1";		
 		$userid="";
@@ -227,7 +227,7 @@ if (!is_null($events['events'])) {
 									echo "Error updating record: " . $link->error;
 							}
 							
-							$sql = "UPDATE member SET telephone='".$telephone."' WHERE userid='".$userid."'";
+							$sql = "UPDATE member1 SET telephone='".$telephone."' WHERE userid='".$userid."'";
 															
 							if ($link->query($sql) === TRUE) {
 									echo "Record updated successfully";
@@ -293,8 +293,8 @@ if (!is_null($events['events'])) {
 								}
 							}
 									
-							$sql = "INSERT INTO member(id, userid , telephone, password)
-										VALUES ('', '$userid', '$telephone', '')";
+							$sql = "INSERT INTO member1(id, userid, telephone)
+										VALUES ('', '$userid', '$telephone')";
 													
 										if (mysqli_query($link, $sql)) {
 													echo "New record created successfully";
