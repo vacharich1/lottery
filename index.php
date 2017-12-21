@@ -63,15 +63,13 @@ if (!is_null($events['events'])) {
 					];
 				}
 				
-				$sql1 = "SELECT * FROM userstep WHERE uid='".$userid."'";
+				$sql1 = "SELECT * FROM userstep1 WHERE uid='".$userid."'";
 				$result = $link->query($sql1);
 				$check_member="1";		
-				$credit="0";
 				if ($result->num_rows > 0) {
 				// output data of each row
 					while($row = $result->fetch_assoc()) {
 								$step=$row["step"];
-								$credit=$row["credit"];
 						}
 					}
 				
