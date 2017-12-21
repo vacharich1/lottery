@@ -185,7 +185,8 @@ if (!is_null($events['events'])) {
 							];	
 							//$date = new DateTime('now');
 							//$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
-							$DateResultNow=date(NOW(), mktime(date("H")+7, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
+							//$dateuse=NOW();
+							$DateResultNow=date("Y-m-d H:i:s", mktime(date("H")+7, date("i")+0, date("s")+0, date("m")+0 , date("d")+0, date("Y")+0));
 							
 
 							
