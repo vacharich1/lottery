@@ -163,6 +163,7 @@ if (!is_null($events['events'])) {
 					else
 					{
 						// Create connection
+						
 						$sql1 = "SELECT * FROM number";
 						$result = $link->query($sql1);
 						$checknumber="0";
@@ -184,6 +185,8 @@ if (!is_null($events['events'])) {
 							//$date = new DateTime('now');
 							//$dtz = new DateTimeZone("Asia/Bangkok"); //Your timezone
 							//$dateuse=CURDATE();
+							
+							ini_set( 'date.timezone', 'Asia/Bangkok' ); 
 							
 							$sql = "INSERT INTO numberfromuser(id, userid, telephone, number, date)
 										VALUES ('', '$userid', '$telephone', '$text', NOW())";
