@@ -138,7 +138,7 @@ if (!is_null($events['events'])) {
 				if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
-						if($userid==$row["uid"])
+						if($userid==$row["userid"])
 						{
 							$step=$row["step"];
 							$telephone=$row["telephone"];
