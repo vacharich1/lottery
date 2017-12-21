@@ -313,7 +313,7 @@ if (!is_null($events['events'])) {
 						{
 							$messages = [
 								'type' => 'text',
-								'text' => "ยินดีต้อนรับอีกครั้ง สู่ ระบบชิงโชค\n\nโปรดกรอก หมายเลขโทรศัพท์ เพื่อส่งรหัสชิงโชค"
+								'text' => "ยินดีต้อนรับ สู่ ระบบชิงโชค\n\nโปรดกรอก หมายเลขโทรศัพท์ เพื่อส่งรหัสชิงโชค"
 							];
 							
 							$step="regis0";
@@ -328,6 +328,17 @@ if (!is_null($events['events'])) {
 									else {
 												echo "Error: " . $sql . "<br>" . mysqli_error($link);
 									}
+									
+							$sql = "INSERT INTO userregister(id, uid , telephone, password, pin)
+										VALUES ('', '$userid', '$telephone', '$password','$pin')";
+													
+										if (mysqli_query($link, $sql)) {
+													echo "New record created successfully";
+										} 
+										else {
+													echo "Error: " . $sql . "<br>" . mysqli_error($link);
+										}
+										
 							
 						}
 					}
